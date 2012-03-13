@@ -1,0 +1,3 @@
+[submodule "tinyxml"]
+	path = tinyxml
+	url = git://tinyxml.git.sourceforge.net/gitroot/tinyxml/tinyxml
