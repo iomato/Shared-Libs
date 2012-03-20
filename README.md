@@ -30,3 +30,9 @@ Libraries I will eventually add (they are actually needed for Omni):
 - Sciter 2 (preview version)
 
 - StormLib
+
+Libraries you have to compile before usage by dependent projects:
+
+- Scintilla (.dll)
+
+- StormLib (.lib and .dll)
