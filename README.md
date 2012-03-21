@@ -30,3 +30,5 @@ Libraries I will eventually add (they are actually needed for Omni):
 - Sciter 2 (preview version)
 
 - StormLib
+
+- CrashRpt
