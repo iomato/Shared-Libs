@@ -19,6 +19,8 @@ Libraries available:
 
 - TinyXML: from developer source - submodule
 
+- Sciter 2 (preview version): from [here](http://www.terrainformatica.com/)
+
 Libraries I will eventually add (they are actually needed for Omni):
 
 - ATLServer
@@ -26,8 +28,6 @@ Libraries I will eventually add (they are actually needed for Omni):
 - distorm3
 
 - Scintilla (Omni customized)
-
-- Sciter 2 (preview version)
 
 - StormLib
 
