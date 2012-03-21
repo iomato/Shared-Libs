@@ -1,0 +1,1692 @@
+<HTML>
+  <HEAD>
+    <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <META name="GENERATOR" content="BLOCKNOTE.NET">
+    <META name="source" content="http://msdn.microsoft.com/workshop/author/css/reference/attributes.asp?frame=true">
+    <META name="source">
+    <BASEFONT face="Verdana" size="2">
+    <TITLE>+HTMLayout CSS support map</TITLE><STYLE>BODY { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+P { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+DIV { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+TD { FONT-FAMILY:Verdana; FONT-SIZE:10pt }
+</STYLE>
+  </HEAD>
+<BODY>
+<P align="left">CSS level support in h-smile core should be considered as 'essential'. We have no intention to cover full CSS1/CSS2 attibute map.</P>
+<P align="left">Features specific to HTMLayout:</P>
+<UL>
+<LI><DIV align="left">Gradient backgrounds, see <A href="#background-color-attribute">background-color</A> attribute definition.</DIV></LI>
+<LI><DIV align="left">Extended image fill, see <A href="#background-position-attribute">background-position</A> and background-repeat attribute definitions.</DIV></LI>
+<LI><DIV align="left"><A href="fspu.whtm">%% length units</A> - &quot;percents from free space&quot;.</DIV></LI>
+<LI><DIV align="left"><A href="#flow-attribute">flow attribute</A>.</DIV></LI>
+<LI><DIV align="left"><A href="#foreground-position-attribute">Foreground images</A>.</DIV></LI>
+<LI><DIV align="left"><A href="#hit-margin">hit-margin</A> attribute.</DIV></LI>
+<LI><DIV align="left"><EM><FONT face="Courier New">@include</EM> &quot;mime-type&quot; url(...) [media types list];</FONT> - inclusion of scripts from CSS. <BR>Example, this:<BR><FONT face="Courier New">&lt;style&gt;<BR>@include &quot;text/tiscript&quot; url(script.tis) screen;<BR>&lt;/style&gt;<BR></FONT>is an equivalent of <BR><FONT face="Courier New">&lt;script type=&quot;text/tiscript&quot; src=&quot;script.tis&quot; /&gt;</FONT><BR>except of media type condition.</DIV></LI></UL>
+
+<P align="left">Cascading: HTMLayout supports all CSS1 <A href="http://www.w3.org/TR/CSS1#basic-concepts">Basic concepts</A> and <A href="http://www.w3.org/TR/CSS1#cascading-order">Cascading orders</A>. HTMLayout also supports CSS 2.1 <A href="http://www.w3.org/TR/CSS21/selector.html#attribute-selectors">attribute selectors</A> and some essential selectors from CSS3 selector module.</P>
+<H3 align="left">Custom CSS attributes</H3>
+<P align="left">h-smile core supports custom CSS attributes. All attributes with names starting with '-' are considered as custom attributes. Custom attributes are not inhereted from parent to child. Example of custom attribute declaration:</P>
+<P align="left">p { border: 1px solid red; <STRONG>-custom: &quot;value&quot;;</STRONG> &nbsp;&nbsp;}</P>
+<P align="left">After such declaration all &lt;p&gt; elements will have style attribute <STRONG>-custom</STRONG> equals to &quot;value&quot;.</P>
+<P align="left">Value of custom attribute can be either:</P>
+<UL>
+<LI><DIV align="left">string (enclosed in &quot;&quot;), example: <EM>&quot;string&quot;</EM> ;</DIV></LI>
+<LI><DIV align="left">nmtoken, example: <EM>some-token</EM> ;</DIV></LI>
+<LI><DIV align="left">numeric value, example: <EM>3.1415</EM> ;</DIV></LI>
+<LI><DIV align="left">url, example: <EM>url(http://something.com)</EM>; &nbsp;</DIV></LI>
+<LI><DIV align="left">CSS selector, example: <EM>selector(#id &gt; .cls)</EM>;</DIV></LI></UL>
+
+<DIV align="left">Host application can use custom attributes for any purpose, engine does not interpret such attributes internally.</DIV>
+<H3 align="left">Standard CSS attributes</H3>
+<P align="left">List of CSS attributes supported by h-smile core:</P><DIV align="left">
+<TABLE border="1" bordercolor=#fff2cc cellspacing="0">
+  <TR>
+    <TD rowspan="18" valign="top"><STRONG>Font and pragraph properties</STRONG></TD>
+    <TD nowrap valign="top" align="right"><STRONG>font</STRONG></TD>
+    <TD>
+<DIV>specifies up to six of the following space-delimited property values. Alternatively, sets or retrieves the six listed text fonts.</DIV>
+<DIV>See: <A href="http://www.w3.org/TR/CSS1#font">Cascading Style Sheets, level 1</A></DIV>
+<DIV>&nbsp;</DIV>
+<DIV>In h-smile core engine the <EM>font</EM> also supports names of following system fonts:</DIV>
+<UL>
+<LI><FONT face="Courier New">system</FONT> - default system UI font used for input elements;</LI>
+<LI><FONT face="Courier New">system-menu</FONT> - system menu font;</LI>
+<LI><FONT face="Courier New">system-caption</FONT> - window caption font;</LI>
+<LI><FONT face="Courier New">system-status</FONT> - statusbar and tooltip system font.</LI></UL>
+
+<DIV>Note: To be in effect these font names can be used only in the <EM>font</EM> attribute - in font-family such names are ignored. Rationale of this is simple, declaration <FONT face="Courier New">font:system-menu;</FONT> for example is a shortcut of four attributes of the font - font-family, font-size, font-weight and font-variant.</DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>font-family</STRONG></TD>
+    <TD>
+<DIV>specifies one of the following values.</DIV>
+      <TABLE>
+        <TR>
+          <TD nowrap valign="middle">family-name</TD>
+          <TD>Any of the available font families installed in the system. For example, Times, Helvetica, Zapf-Chancery, Western, or Courier.</TD>
+        </TR>
+        <TR>
+          <TD nowrap valign="middle">generic-name</TD>
+          <TD>Any of the following font families: serif, sans-serif, cursive, fantasy, or monospace.</TD>
+        </TR>
+      </TABLE>
+<DIV>See: <A href="http://www.w3.org/TR/CSS1#font-family">Cascading Style Sheets, level 1</A></DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>font-size</STRONG></TD>
+    <TD>
+<DIV>specifies one of the following values.</DIV>
+      <TABLE>
+        <TR>
+          <TD nowrap valign="middle">absolute-size</TD>
+          <TD>Set of keywords that indicate predefined font sizes. Named font sizes scale according to the user's font setting preferences. Possible values include the following: xx-small, x-small, small, medium, large, x-large, xx-large.</TD>
+        </TR>
+        <TR>
+          <TD nowrap valign="middle">relative-size</TD>
+          <TD>Set of keywords that are interpreted as relative to the font size of the parent object. Possible values include the following: larger, smaller.</TD>
+        </TR>
+        <TR>
+          <TD nowrap valign="middle">length</TD>
+          <TD>Floating-point number, followed by an absolute units designator (cm, mm, in, pt, pc, or px) or a relative units designator (em or ex). For more information about the supported length units, see the <A href="http://www.w3.org/TR/CSS1#length-units">CSS Length Units Reference</A>.</TD>
+        </TR>
+        <TR>
+          <TD nowrap valign="middle">percentage</TD>
+          <TD>Integer, followed by a percent (%). The value is a percentage of the parent object's font size. In Internet Explorer 3.0, the value is calculated as a percentage of the default font size.</TD>
+        </TR>
+      </TABLE>
+<DIV>See: <A href="http://www.w3.org/TR/CSS1#font-size">Cascading Style Sheets, level 1</A></DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>font-style</STRONG></TD>
+    <TD>
+<DIV>specifies one of the following values.</DIV>
+      <TABLE>
+        <TR>
+          <TD>normal</TD>
+          <TD>Default. Font is normal.</TD>
+        </TR>
+        <TR>
+          <TD>italic</TD>
+          <TD>Font is italic.</TD>
+        </TR>
+        <TR>
+          <TD>oblique</TD>
+          <TD>Font is italic.</TD>
+        </TR>
+      </TABLE>
+<DIV>See: <A href="http://www.w3.org/TR/CSS1#font-style">Cascading Style Sheets, level 1</A></DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>font-weight</STRONG></TD>
+    <TD>
+<DIV>specifies one of the following values.</DIV>
+      <TABLE>
+        <TR>
+          <TD>normal</TD>
+          <TD>Default. Font is normal.</TD>
+        </TR>
+        <TR>
+          <TD>bold</TD>
+          <TD>Font is bold.</TD>
+        </TR>
+        <TR>
+          <TD>bolder</TD>
+          <TD>Font is heavier than regular bold.</TD>
+        </TR>
+        <TR>
+          <TD>lighter</TD>
+          <TD>Font is lighter than normal.</TD>
+        </TR>
+        <TR>
+          <TD>100</TD>
+          <TD>Font is at least as light as the 200 weight.</TD>
+        </TR>
+        <TR>
+          <TD>200</TD>
+          <TD>Font is at least as bold as the 100 weight and at least as light as the 300 weight.</TD>
+        </TR>
+        <TR>
+          <TD>300</TD>
+          <TD>Font is at least as bold as the 200 weight and at least as light as the 400 weight.</TD>
+        </TR>
+        <TR>
+          <TD>400</TD>
+          <TD>Font is normal.</TD>
+        </TR>
+        <TR>
+          <TD>500</TD>
+          <TD>Font is at least as bold as the 400 weight and at least as light as the 600 weight.</TD>
+        </TR>
+        <TR>
+          <TD>600</TD>
+          <TD>Font is at least as bold as the 500 weight and at least as light as the 700 weight.</TD>
+        </TR>
+        <TR>
+          <TD>700</TD>
+          <TD>Font is bold.</TD>
+        </TR>
+        <TR>
+          <TD>800</TD>
+          <TD>Font is at least as bold as the 700 weight and at least as light as the 900 weight.</TD>
+        </TR>
+        <TR>
+          <TD>900</TD>
+          <TD>Font is at least as bold as the 800 weight.</TD>
+        </TR>
+      </TABLE>
+<DIV>See: <A href="http://www.w3.org/TR/CSS1#font-variant">Cascading Style Sheets, level 1</A></DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>letter-spacing</STRONG></TD>
+    <TD>N/A</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>line-height</STRONG></TD>
+    <TD>
+<DIV><STRONG>specifies</STRONG> one of the following values:</DIV>
+      <TABLE>
+        <TR>
+          <TD>normal</TD>
+          <TD>Default. Default height.</TD>
+        </TR>
+        <TR>
+          <TD>height</TD>
+          <TD>Floating-point number, followed by an absolute units designator (cm, mm, in, pt, pc, or px) or a relative units designator (em or ex). For more information about the supported length units, see <A href="http://www.w3.org/TR/CSS1#length-units">CSS Length Units Reference</A>.</TD>
+        </TR>
+        <TR>
+          <TD>percentage</TD>
+          <TD>Integer, followed by a percent sign (%). The value is a percentage of the height of the parent object.</TD>
+        </TR>
+        <TR>
+          <TD>calc(...)</TD>
+          <TD><A href="csss!-calc-function.htm">the calc function</A>.</TD>
+        </TR>
+      </TABLE>
+<DIV>See: <A href="http://www.w3.org/TR/CSS1#line-height">Cascading Style Sheets, level 1</A></DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>text-align</STRONG></TD>
+    <TD>
+<DIV><STRONG>specifies</STRONG> one of the following values:</DIV>
+      <TABLE>
+        <TR>
+          <TD>left</TD>
+          <TD>Default. Text is aligned to the left.</TD>
+        </TR>
+        <TR>
+          <TD>right</TD>
+          <TD>Text is aligned to the right.</TD>
+        </TR>
+        <TR>
+          <TD>center</TD>
+          <TD>Text is centered.</TD>
+        </TR>
+        <TR>
+          <TD>justify</TD>
+          <TD>Text is justified.</TD>
+        </TR>
+      </TABLE>
+<DIV>See: <A href="http://www.w3.org/TR/CSS1#text-align">Cascading Style Sheets, level 1</A></DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>text-decoration</STRONG></TD>
+    <TD>
+<DIV><STRONG>specifies</STRONG> one of the following values.</DIV>
+      <TABLE>
+        <TR>
+          <TD nowrap valign="middle">none</TD>
+          <TD>Default. Text has no decoration.</TD>
+        </TR>
+        <TR>
+          <TD nowrap valign="middle">underline</TD>
+          <TD>Text is underlined.</TD>
+        </TR>
+        <TR>
+          <TD nowrap valign="middle">overline</TD>
+          <TD>Text has a line over it.</TD>
+        </TR>
+        <TR>
+          <TD nowrap valign="middle">line-through</TD>
+          <TD>Text has a line drawn through it.</TD>
+        </TR>
+        <TR>
+          <TD nowrap valign="middle">blink</TD>
+          <TD>Not implemented.</TD>
+        </TR>
+      </TABLE>
+<DIV>See: <A href="http://www.w3.org/TR/CSS1#text-decoration">Cascading Style Sheets, level 1</A></DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>text-indent</STRONG></TD>
+    <TD>
+<DIV>indentation of the first line of text in the object.</DIV>
+      <TABLE>
+        <TR>
+          <TD>length</TD>
+          <TD>Floating-point number, followed by an absolute units designator (cm, mm, in, pt, pc, or px) or a relative units designator (em or ex). For more information about the supported length units, see <A href="http://www.w3.org/TR/CSS1#length-units">CSS Length Units Reference</A>.</TD>
+        </TR>
+        <TR>
+          <TD>percentage</TD>
+          <TD>Integer, followed by a percent sign (%). This value is a percentage of the width of the parent object.</TD>
+        </TR>
+      </TABLE>
+<DIV>See: <A href="http://www.w3.org/TR/CSS1#text-indent">Cascading Style Sheets, level 1</A></DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap bgcolor=#ffffdd valign="top" align="right"><STRONG>text-overflow</STRONG></TD>
+    <TD bgcolor=#ffffdd>
+<DIV>specifies a value that indicates whether ellipses(...) display when text content has overflowed its given layout area.</DIV>
+      <TABLE>
+        <TR>
+          <TD>ellipsis</TD>
+          <TD>Display ellipses(...) for text overflow.</TD>
+        </TR>
+        <TR>
+          <TD>clip</TD>
+          <TD>Default. Simply clip the content and do not display ellipses for text overflow.</TD>
+        </TR>
+      </TABLE></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>text-transform</STRONG></TD>
+    <TD>
+<DIV>trivial text transformations. Accepts values:</DIV>
+<BLOCKQUOTE>
+<DIV>none | uppercase | lowercase | capitalize</DIV></BLOCKQUOTE>
+
+<DIV>default value: none.</DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>vertical-align</STRONG></TD>
+    <TD>
+<DIV>specifies one of the following values.</DIV>
+      <TABLE>
+        <TR>
+          <TD>baseline</TD>
+          <TD>Default. Aligns the contents of an object supporting VALIGN to the base line.</TD>
+        </TR>
+        <TR>
+          <TD>sub</TD>
+          <TD>Vertically aligns the text to subscript.</TD>
+        </TR>
+        <TR>
+          <TD>super</TD>
+          <TD>Vertically aligns the text to superscript.</TD>
+        </TR>
+        <TR>
+          <TD>top</TD>
+          <TD>Vertically aligns the contents of an object supporting <STRONG>VALIGN</STRONG> to the top of the object.</TD>
+        </TR>
+        <TR>
+          <TD>middle</TD>
+          <TD>Vertically aligns the contents of an object supporting <STRONG>VALIGN</STRONG> to the middle of the object.</TD>
+        </TR>
+        <TR>
+          <TD>bottom</TD>
+          <TD>Vertically aligns the contents of an object supporting <STRONG>VALIGN</STRONG> to the bottom of the object.</TD>
+        </TR>
+        <TR>
+          <TD>text-top</TD>
+          <TD>Vertically aligns the text of an object supporting <STRONG>VALIGN</STRONG> to the top of the object.</TD>
+        </TR>
+        <TR>
+          <TD>text-bottom</TD>
+          <TD>Vertically aligns the text of an object supporting <STRONG>VALIGN</STRONG> to the bottom of the object.</TD>
+        </TR>
+      </TABLE>
+<DIV>See: <A href="http://www.w3.org/TR/CSS1#vertical-align">Cascading Style Sheets, level 1</A></DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>white-space</STRONG></TD>
+    <TD>
+<DIV>specifies one of the following values:</DIV>
+      <TABLE>
+        <TR>
+          <TD valign="top">normal</TD>
+          <TD>Lines may break at allowed break points, as determined by the line-breaking rules in effect</TD>
+        </TR>
+        <TR>
+          <TD valign="top">none</TD>
+          <TD>Lines may not break; text that does not fit within the block box overflows it.</TD>
+        </TR>
+        <TR>
+          <TD valign="top">pre</TD>
+          <TD>Line breaks and other whitespace are preserved.</TD>
+        </TR>
+        <TR>
+          <TD valign="top">prewrap</TD>
+          <TD bgcolor=#ffffdd valign="top">Line breaks and other whitespace are preserved. Content may wrap to the next line if needed. This is the same mode &lt;textarea&gt; uses when it has wrap=&quot;on&quot; attribute defined. Non-standard.</TD>
+        </TR>
+      </TABLE>
+<DIV>See: <A href="http://www.w3.org/TR/CSS1#white-space">Cascading Style Sheets, level 1</A></DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>text-wrap</STRONG></TD>
+    <TD>
+<DIV>specifies one of the following values:</DIV>
+      <TABLE>
+        <TR>
+          <TD valign="top">normal</TD>
+          <TD>Lines may break at allowed break points only, e.g. on whitespace.</TD>
+        </TR>
+        <TR>
+          <TD valign="top">none</TD>
+          <TD>Line breaks are suppressed. Content does not wrap to the next line.</TD>
+        </TR>
+        <TR>
+          <TD valign="top">unrestricted</TD>
+          <TD>Lines may break between any two characters.</TD>
+        </TR>
+      </TABLE>
+<DIV>See: <A href="http://www.w3.org/TR/css3-text/#text-wrap">Cascading Style Sheets, level 3</A></DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap bgcolor=#ffffdd valign="top" align="right"><STRONG>text-selection-color</STRONG></TD>
+    <TD bgcolor=#ffffdd>specifies color of selected text (in inputs and elements under behavior:htmlarea). Non-standard. Inheritable property.</TD>
+  </TR>
+  <TR>
+    <TD nowrap bgcolor=#ffffdd valign="top" align="right"><STRONG>text-selection-background-color</STRONG></TD>
+    <TD bgcolor=#ffffdd>specifies background color of text selection (in inputs and elements under behavior:htmlarea). Non-standard. Inheritable property.</TD>
+  </TR>
+  <TR>
+    <TD nowrap bgcolor=#ffffdd valign="top" align="right"><STRONG>text-selection</STRONG></TD>
+    <TD bgcolor=#ffffdd>
+<DIV>&lt;text-color&gt; &lt;background-text-color&gt;</DIV>
+<DIV>specifies colors of text selection, shortcut of two properties above. Non-standard.</DIV></TD>
+  </TR>
+  <TR>
+    <TD rowspan="8" valign="top">
+<DIV><STRONG>Color and background properties</STRONG></DIV>
+<DIV>&nbsp;</DIV>
+<DIV>&nbsp;</DIV>
+<DIV>&nbsp;</DIV></TD>
+    <TD nowrap valign="top" align="right"><STRONG>background</STRONG></TD>
+    <TD>
+<DIV><STRONG>specifies</STRONG> up to five of the following space-delimited values, in any order.</DIV>
+<DIV>See: <A href="http://www.w3.org/TR/CSS1#background">Cascading Style Sheets, level 1</A></DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>background-attachment</STRONG></TD>
+    <TD>
+<DIV><STRONG>specifies</STRONG> one of the following values.</DIV>
+      <TABLE>
+        <TR>
+          <TD>scroll</TD>
+          <TD>Default. Background image scrolls with the object as the document is scrolled.</TD>
+        </TR>
+        <TR>
+          <TD>fixed</TD>
+          <TD>Background image stays fixed within the viewable area of the object.</TD>
+        </TR>
+      </TABLE></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><A name="background-color-attribute"><STRONG>background-color</STRONG></A></STRONG></TD>
+    <TD>
+<DIV><STRONG>specifies</STRONG> one of the following values.</DIV>
+      <TABLE>
+        <TR>
+          <TD width="154">transparent</TD>
+          <TD>Default. Color of the next parent object through which the background is visible.</TD>
+        </TR>
+        <TR>
+          <TD>color</TD>
+          <TD>Any color value, including those specified in the <A href="http://msdn.microsoft.com/workshop/author/dhtml/reference/colors/colors.asp">Color Table</A>.</TD>
+        </TR>
+        <TR>
+          <TD nowrap bgcolor=#ffffdd valign="middle">color-left-top,<BR>color-right-top,<BR>color-right-bottom,<BR>color-left-bottom</TD>
+          <TD bgcolor=#ffffdd valign="middle"><STRONG><FONT color=#ff0000>Gradient fill</FONT></STRONG>. Four corner colors for gradient background fill. Non standard. HTMLayout specific.</TD>
+        </TR>
+      </TABLE></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>background-image</STRONG></TD>
+    <TD>
+<DIV><STRONG>specifies</STRONG> one of the following values.</DIV>
+      <TABLE>
+        <TR>
+          <TD>none</TD>
+          <TD>Default. Color of the next parent through which the background is visible.</TD>
+        </TR>
+        <TR>
+          <TD>url(sUrl)</TD>
+          <TD>Location of the background image, where sUrl is an absolute or relative URL.</TD>
+        </TR>
+      </TABLE></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><A name="background-position-attribute"><STRONG>background-position</STRONG></A></STRONG></TD>
+    <TD>
+<DIV><STRONG>specifies</STRONG> one or two of the following values:</DIV>
+      <TABLE>
+        <TR>
+          <TD>length</TD>
+          <TD>Floating-point number, followed by an absolute units designator (cm, mm, in, pt, pc, or px) or a relative units designator (em or ex). For more information about the supported length units, see <A href="http://www.w3.org/TR/CSS1#length-units">CSS Length Units Reference</A>.</TD>
+        </TR>
+        <TR>
+          <TD>percentage</TD>
+          <TD>Integer, followed by a percent sign (%). The value is a percentage of the width or height of the object.</TD>
+        </TR>
+        <TR>
+          <TD>top, center, bottom</TD>
+          <TD>
+<DIV>Vertical alignment value. Possible values include the following:</DIV>
+            <TABLE>
+              <TR>
+                <TD>top</TD>
+                <TD>Vertical alignment is at the top.</TD>
+              </TR>
+              <TR>
+                <TD>center</TD>
+                <TD>Vertical alignment is centered.</TD>
+              </TR>
+              <TR>
+                <TD>bottom</TD>
+                <TD>Vertical alignment is at the bottom.</TD>
+              </TR>
+            </TABLE></TD>
+        </TR>
+        <TR>
+          <TD>left, center, right</TD>
+          <TD>
+<DIV>Horizontal alignment value. Possible values include the following:</DIV>
+            <TABLE>
+              <TR>
+                <TD>left</TD>
+                <TD>Horizontal alignment is to the left.</TD>
+              </TR>
+              <TR>
+                <TD>center</TD>
+                <TD>Horizontal alignment is centered.</TD>
+              </TR>
+              <TR>
+                <TD>right</TD>
+                <TD>Horizontal alignment is to the right.</TD>
+              </TR>
+            </TABLE></TD>
+        </TR>
+        <TR>
+          <TD nowrap bgcolor=#ffffdd valign="middle"><FONT face="monospace">left</FONT>-side-length,<BR><FONT face="monospace">top</FONT>-side-length,<BR><FONT face="monospace">right</FONT>-side-length,<BR><FONT face="monospace">bottm</FONT>-side-length</TD>
+          <TD bgcolor=#ffffdd valign="middle">
+<DIV><STRONG><FONT color=#ff0000>Expandable filling</FONT></STRONG> image margins.</DIV>
+<DIV>See <STRONG>Expandable tiling</STRONG> section in HtmLayout documentation.</DIV>
+<DIV>To use extended fill background <STRONG>background-repeat</STRONG><EM> </EM>attribute should be equal to '<STRONG>expand</STRONG>'. Non standard. HTMLayout specific.</DIV>
+<DIV>&nbsp;</DIV></TD>
+        </TR>
+        <TR>
+          <TD>calc(...)</TD>
+          <TD><A href="csss!-calc-function.htm">the calc function</A>.</TD>
+        </TR>
+      </TABLE>
+<DIV><FONT face="monospace">.style1 { background-position:top center }</FONT></DIV>
+<DIV><FONT face="monospace">.style2 { background-position:0 0 }</FONT></DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><A name="background-position-attribute"><STRONG>background-position</A>-left<BR><A name="background-position-attribute">background-position</A>-right<BR><A name="background-position-attribute">background-position</A>-top<BR><A name="background-position-attribute">background-position</A>-bottom</STRONG></TD>
+    <TD>Used in <EM>expand</EM>, <EM>stretch</EM> and <EM>no-repeat</EM> modes. &nbsp;</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>background-repeat</STRONG></TD>
+    <TD>
+<DIV><STRONG>specifies</STRONG> one of the following values:</DIV>
+      <TABLE>
+        <TR>
+          <TD nowrap>repeat</TD>
+          <TD>Default. Image is repeated horizontally and vertically.</TD>
+        </TR>
+        <TR>
+          <TD nowrap>no-repeat</TD>
+          <TD>Image is not repeated.</TD>
+        </TR>
+        <TR>
+          <TD nowrap>repeat-x</TD>
+          <TD>Image is repeated horizontally.</TD>
+        </TR>
+        <TR>
+          <TD nowrap>repeat-y</TD>
+          <TD>Image is repeated vertically.</TD>
+        </TR>
+        <TR>
+          <TD nowrap valign="middle"><STRONG><EM>expand</EM></STRONG></TD>
+          <TD bgcolor=#ffffdd valign="middle"><STRONG><FONT color=#ff0000>Expandable filling</FONT></STRONG> mode.</TD>
+        </TR>
+        <TR>
+          <TD nowrap valign="top"><STRONG><EM>stretch </EM></STRONG>[<EM>keep-ratio</EM>]</TD>
+          <TD bgcolor=#ffffdd valign="top">Image is stretched to fill background in full. This is the same mode as rendering of image in &lt;IMG&gt; element. If stretch is combined with <EM>keep-ratio</EM> then images is resized with preservation of aspect ratio. To position such an image use background-position attribute.</TD>
+        </TR>
+      </TABLE></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>color</STRONG></TD>
+    <TD>Sets the color of the text of the object.</TD>
+  </TR>
+  <TR>
+    <TD rowspan="7" bgcolor=#ffffdd valign="top">
+<DIV><STRONG>foreground image &nbsp;properties.</STRONG></DIV>
+<P><FONT size="1">Foreground image is HTMLayout specific feature.</FONT></P>
+<P><FONT size="1">Foreground image has the same set of attributes as background.</FONT></P>
+<P><FONT size="1">Sequence of drawing of block in HTMLayout:</FONT></P>
+<P><FONT size="1">1. background<BR>2. borders<BR>3. content<BR>4. outline<BR>5. foreground</FONT></P>
+<DIV>&nbsp;</DIV>
+<DIV>&nbsp;</DIV></TD>
+    <TD nowrap bgcolor=#ffffdd valign="top" align="right"><STRONG>foreground</STRONG></TD>
+    <TD bgcolor=#ffffdd>
+<DIV><STRONG>specifies</STRONG> up to four of the following space-delimited values, in any order.</DIV>
+<DIV>&lt;foreground-image url&gt; || &lt;foreground-repeat&gt; || &lt;foreground-attachment&gt; || &lt;foreground-position&gt;</DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap bgcolor=#ffffdd valign="top" align="right"><STRONG>foreground-attachment</STRONG></TD>
+    <TD bgcolor=#ffffdd>
+<DIV><STRONG>specifies</STRONG> one of the following values.</DIV>
+      <TABLE>
+        <TR>
+          <TD>scroll</TD>
+          <TD>Default. Foreground image scrolls with the object as the document is scrolled.</TD>
+        </TR>
+        <TR>
+          <TD>fixed</TD>
+          <TD>Foreground image stays fixed within the viewable area of the object.</TD>
+        </TR>
+      </TABLE></TD>
+  </TR>
+  <TR>
+    <TD nowrap bgcolor=#ffffdd valign="top" align="right"><STRONG>foreground-image</STRONG></TD>
+    <TD bgcolor=#ffffdd>
+<DIV><STRONG>specifies</STRONG> one of the following values.</DIV>
+      <TABLE>
+        <TR>
+          <TD>none</TD>
+          <TD>Default. Color of the next parent through which the background is visible.</TD>
+        </TR>
+        <TR>
+          <TD>url(sUrl)</TD>
+          <TD>Location of the background image, where sUrl is an absolute or relative URL.</TD>
+        </TR>
+      </TABLE></TD>
+  </TR>
+  <TR>
+    <TD nowrap bgcolor=#ffffdd valign="top" align="right"><A name="foreground-position-attribute"><STRONG>foreground-position</STRONG></A></STRONG></TD>
+    <TD bgcolor=#ffffdd>
+<DIV><STRONG>specifies</STRONG> following values.</DIV>
+      <TABLE>
+        <TR>
+          <TD>length</TD>
+          <TD>Floating-point number, followed by an absolute units designator (cm, mm, in, pt, pc, or px) or a relative units designator (em or ex). For more information about the supported length units, see <A href="http://www.w3.org/TR/CSS1#length-units">CSS Length Units Reference</A>.</TD>
+        </TR>
+        <TR>
+          <TD>percentage</TD>
+          <TD>Integer, followed by a percent sign (%). The value is a percentage of the width or height of the object.</TD>
+        </TR>
+        <TR>
+          <TD>top, center, bottom</TD>
+          <TD>
+<DIV>Vertical alignment value. Possible values include the following:</DIV>
+            <TABLE>
+              <TR>
+                <TD>top</TD>
+                <TD>Vertical alignment is at the top.</TD>
+              </TR>
+              <TR>
+                <TD>center</TD>
+                <TD>Vertical alignment is centered.</TD>
+              </TR>
+              <TR>
+                <TD>bottom</TD>
+                <TD>Vertical alignment is at the bottom.</TD>
+              </TR>
+            </TABLE></TD>
+        </TR>
+        <TR>
+          <TD>left, center, right</TD>
+          <TD>
+<DIV>Horizontal alignment value. Possible values include the following:</DIV>
+            <TABLE>
+              <TR>
+                <TD>left</TD>
+                <TD>Horizontal alignment is to the left.</TD>
+              </TR>
+              <TR>
+                <TD>center</TD>
+                <TD>Horizontal alignment is centered.</TD>
+              </TR>
+              <TR>
+                <TD>right</TD>
+                <TD>Horizontal alignment is to the right.</TD>
+              </TR>
+            </TABLE></TD>
+        </TR>
+        <TR>
+          <TD nowrap bgcolor=#ffffdd valign="middle"><FONT face="monospace">left</FONT>-side-length,<BR><FONT face="monospace">top</FONT>-side-length,<BR><FONT face="monospace">right</FONT>-side-length,<BR><FONT face="monospace">bottm</FONT>-side-length</TD>
+          <TD bgcolor=#ffffdd valign="middle">
+<DIV><STRONG><FONT color=#ff0000>Expandable filling</FONT></STRONG> image margins.</DIV>
+<DIV>See <STRONG>Expandable tiling</STRONG> section in HtmLayout documentation.</DIV>
+<DIV>To use extended fill background <STRONG>background-repeat</STRONG><EM> </EM>attribute should be equal to '<STRONG>expand</STRONG>'. Non standard. HTMLayout specific.</DIV>
+<DIV>&nbsp;</DIV></TD>
+        </TR>
+        <TR>
+          <TD>calc(...)</TD>
+          <TD><A href="csss!-calc-function.htm">the calc function</A>.</TD>
+        </TR>
+      </TABLE>
+<DIV><FONT face="monospace">.style1 { background-position:top center }</FONT></DIV>
+<DIV><FONT face="monospace">.style2 { background-position:0 0 }</FONT></DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap bgcolor=#ffffdd valign="top" align="right"><STRONG>foreground-position-left<BR>foreground-position-right<BR>foreground-position-top<BR>foreground-position-bottom</STRONG></TD>
+    <TD bgcolor=#ffffdd>Used in <EM>expand</EM>, <EM>stretch</EM> and <EM>no-repeat</EM> modes. See <A href="css-images-plus.htm">css-images-plus</A> for more details.</TD>
+  </TR>
+  <TR>
+    <TD nowrap bgcolor=#ffffdd valign="top" align="right"><STRONG>foreground-repeat</STRONG></TD>
+    <TD bgcolor=#ffffdd>
+<DIV><STRONG>specifies</STRONG> one of the following values.</DIV>
+      <TABLE>
+        <TR>
+          <TD nowrap valign="middle"><EM>repeat</EM></TD>
+          <TD>Default. Image is repeated horizontally and vertically.</TD>
+        </TR>
+        <TR>
+          <TD nowrap valign="middle"><EM>no-repeat</EM></TD>
+          <TD>Image is not repeated.</TD>
+        </TR>
+        <TR>
+          <TD nowrap valign="middle"><EM>repeat-x</EM></TD>
+          <TD>Image is repeated horizontally.</TD>
+        </TR>
+        <TR>
+          <TD nowrap valign="middle"><EM>repeat-y</EM></TD>
+          <TD>Image is repeated vertically.</TD>
+        </TR>
+        <TR>
+          <TD nowrap valign="middle"><STRONG><EM>expand</EM></STRONG></TD>
+          <TD bgcolor=#ffffdd valign="middle"><STRONG><FONT color=#ff0000>Expandable filling</FONT></STRONG> mode.</TD>
+        </TR>
+        <TR>
+          <TD nowrap valign="middle"><STRONG><EM>stretch</EM></STRONG> [<EM>keep-ratio</EM>]</TD>
+          <TD bgcolor=#ffffdd valign="middle">Image is stretched to fill background in full. This is the same mode as rendering of image in &lt;IMG&gt; element. If stretch is combined with <EM>keep-ratio</EM> then images is resized with preservation of aspect ratio. To position such an image use foreground-position attribute.</TD>
+        </TR>
+      </TABLE>
+<DIV>See <A href="css-images-plus.htm">css-images-plus</A> for more details.</DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap bgcolor=#ffffdd valign="top" align="right"><STRONG>foreground-image-cursor</STRONG></TD>
+    <TD bgcolor=#ffffdd>
+<DIV>Used when <EM>foreground-repeat</EM> has <EM>no-repeat</EM> value to define when mouse hovers foreground-image area.</DIV>
+<DIV>Values: <EM>auto | crosshair | default | pointer | move | e-resize | ne-resize | nw-resize | n-resize | se-resize | sw-resize | s-resize | w-resize | text | wait | help | progress</EM> or url of .cur or .ani file.</DIV></TD>
+  </TR>
+  <TR>
+    <TD rowspan="33" valign="top"><STRONG>Layout properties</STRONG></TD>
+    <TD nowrap valign="top" align="right"><STRONG>border</STRONG></TD>
+    <TD>
+<DIV><STRONG>specifies</STRONG> one or more of the following space-delimited values: width, style, color.</DIV>
+<DIV>See: <A href="http://www.w3.org/TR/CSS1#border">Cascading Style Sheets, level 1</A></DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>border-bottom</STRONG></TD>
+    <TD>
+<DIV><STRONG>specifies</STRONG> one or more of the following space-delimited values: width, style, color.</DIV>
+<DIV>See: <A href="http://www.w3.org/TR/CSS1#border-bottom">Cascading Style Sheets, level 1</A></DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>border-bottom-color</STRONG></TD>
+    <TD>specifies one of the color names or RGB values in the <A href="http://msdn.microsoft.com/workshop/author/dhtml/reference/colors/colors.asp">Color Table</A>.</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>border-bottom-style</STRONG></TD>
+    <TD>
+<DIV><STRONG>specifies</STRONG> one of the following values.</DIV>
+      <TABLE>
+        <TR>
+          <TD>none</TD>
+          <TD>Default. Border is not drawn, regardless of any border width.</TD>
+        </TR>
+        <TR>
+          <TD>dotted</TD>
+          <TD>Border is a dotted line.</TD>
+        </TR>
+        <TR>
+          <TD>dashed</TD>
+          <TD>Border is a dashed line.</TD>
+        </TR>
+        <TR>
+          <TD>solid</TD>
+          <TD>Border is a solid line.</TD>
+        </TR>
+        <TR>
+          <TD>double</TD>
+          <TD>Border is a double line drawn on top of the background of the object. The sum of the two single lines and the space between equals the <STRONG>borderWidth</STRONG> value. The border width must be at least 3 pixels wide to draw a double border.</TD>
+        </TR>
+        <TR>
+          <TD>groove</TD>
+          <TD>3-D groove is drawn in colors based on the value.</TD>
+        </TR>
+        <TR>
+          <TD>ridge</TD>
+          <TD>3-D ridge is drawn in colors based on the value.</TD>
+        </TR>
+        <TR>
+          <TD>inset</TD>
+          <TD>3-D inset is drawn in colors based on the value.</TD>
+        </TR>
+        <TR>
+          <TD>outset</TD>
+          <TD>3-D outset is drawn in colors based on the value.</TD>
+        </TR>
+      </TABLE></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>border-bottom-width</STRONG></TD>
+    <TD>
+<DIV>specifies one of the following values.</DIV>
+      <TABLE>
+        <TR>
+          <TD width="84">medium</TD>
+          <TD>Default. &nbsp;</TD>
+        </TR>
+        <TR>
+          <TD>thin</TD>
+          <TD>Less than the default width.</TD>
+        </TR>
+        <TR>
+          <TD>thick</TD>
+          <TD>Greater than the default width.</TD>
+        </TR>
+        <TR>
+          <TD>width</TD>
+          <TD>Floating-point number, followed by an absolute units designator (cm, mm, in, pt, pc, or px) or a relative units designator (em or ex). For more information about the supported length units, see <A href="http://www.w3.org/TR/CSS1#length-units">CSS Length Units Reference</A>.</TD>
+        </TR>
+        <TR>
+          <TD bgcolor=#ffe4ca valign="middle"><STRONG>%% units</STRONG></TD>
+          <TD bgcolor=#ffe4ca valign="middle"><A href="fspu.whtm"><STRONG>Percents from free space</A>.</STRONG></TD>
+        </TR>
+        <TR>
+          <TD>calc(...)</TD>
+          <TD><A href="csss!-calc-function.htm">the calc function</A>.</TD>
+        </TR>
+      </TABLE></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>border-collapse*</STRONG></TD>
+    <TD>as per CSS</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>border-color</STRONG></TD>
+    <TD>as per CSS</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>border-left</STRONG></TD>
+    <TD>as per CSS</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>border-left-color</STRONG></TD>
+    <TD>as per CSS</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>border-left-style</STRONG></TD>
+    <TD>as per CSS</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>border-left-width</STRONG></TD>
+    <TD>as per CSS</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>border-right</STRONG></TD>
+    <TD>as per CSS</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>border-right-color</STRONG></TD>
+    <TD>as per CSS</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>border-right-style</STRONG></TD>
+    <TD>as per CSS</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>border-right-width</STRONG></TD>
+    <TD>as per CSS</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>border-style</STRONG></TD>
+    <TD>as per CSS</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>border-top</STRONG></TD>
+    <TD>as per CSS</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>border-top-color</STRONG></TD>
+    <TD>as per CSS</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>border-top-style</STRONG></TD>
+    <TD>as per CSS</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>border-top-width</STRONG></TD>
+    <TD>as per CSS</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>border-width</STRONG></TD>
+    <TD>as per CSS</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>clear</STRONG></TD>
+    <TD>as per CSS</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>float</STRONG></TD>
+    <TD>
+<DIV>specifies one of the following values.</DIV>
+      <TABLE>
+        <TR>
+          <TD>none</TD>
+          <TD>Default. Object displays where it appears in the text.</TD>
+        </TR>
+        <TR>
+          <TD>left</TD>
+          <TD>Text flows to the right of the object.</TD>
+        </TR>
+        <TR>
+          <TD>right</TD>
+          <TD>Text flows to the left of the object.</TD>
+        </TR>
+      </TABLE></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>margin</STRONG></TD>
+    <TD>
+<DIV>specifies up to four of the following space-delimited values.</DIV>
+<DIV>See: <A href="http://www.w3.org/TR/CSS1#margin">Cascading Style Sheets, level 1</A></DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>margin-bottom</STRONG></TD>
+    <TD>
+<DIV>specifies one of the following values.</DIV>
+      <TABLE>
+        <TR>
+          <TD>auto</TD>
+          <TD>Default. Bottom margin is set equal to the top margin.</TD>
+        </TR>
+        <TR>
+          <TD>height</TD>
+          <TD>Floating-point number, followed by an absolute units designator (cm, mm, in, pt, pc, or px) or a relative units designator (em or ex). For more information about the supported length units, see <A href="http://www.w3.org/TR/CSS1#length-units">CSS Length Units Reference</A>.</TD>
+        </TR>
+        <TR>
+          <TD>percentage</TD>
+          <TD>Integer, followed by a percent sign (%). The value is a percentage of the height of the parent object.</TD>
+        </TR>
+        <TR>
+          <TD bgcolor=#ffe4ca valign="middle"><STRONG>%% units</STRONG></TD>
+          <TD bgcolor=#ffe4ca valign="middle"><STRONG>Percents from free space.</STRONG></TD>
+        </TR>
+        <TR>
+          <TD>calc(...)</TD>
+          <TD><A href="csss!-calc-function.htm">the calc function</A>.</TD>
+        </TR>
+      </TABLE></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>margin-left</STRONG></TD>
+    <TD><STRONG>--&quot;--</STRONG></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>margin-right</STRONG></TD>
+    <TD>--&quot;--</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>margin-top</STRONG></TD>
+    <TD>--&quot;--</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>padding</STRONG></TD>
+    <TD>
+<DIV>Sets or retrieves the amount of space to insert between the object and its margin or, if there is a border, between the object and its border.</DIV>
+<DIV>specifies one of the following values.</DIV>
+      <TABLE>
+        <TR>
+          <TD>length</TD>
+          <TD>Floating-point number, followed by an absolute units designator (cm, mm, in, pt, pc, or px) or a relative units designator (em or ex). For more information about the supported length units, see <A href="http://www.w3.org/TR/CSS1#length-units">CSS Length Units Reference</A>.</TD>
+        </TR>
+        <TR>
+          <TD>percentage</TD>
+          <TD>Integer, followed by a %. The value is a percentage of the width of the parent object.</TD>
+        </TR>
+        <TR>
+          <TD bgcolor=#ffe4ca valign="middle"><STRONG>%% units</STRONG></TD>
+          <TD bgcolor=#ffe4ca valign="middle"><STRONG>Percents from free space.</STRONG></TD>
+        </TR>
+        <TR>
+          <TD>calc(...)</TD>
+          <TD><A href="csss!-calc-function.htm">the calc function</A>.</TD>
+        </TR>
+      </TABLE></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>padding-bottom</STRONG></TD>
+    <TD>--&quot;--</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>padding-left</STRONG></TD>
+    <TD>--&quot;--</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>padding-right</STRONG></TD>
+    <TD>--&quot;--</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>padding-top</STRONG></TD>
+    <TD>--&quot;--</TD>
+  </TR>
+  <TR>
+    <TD rowspan="7" valign="top">
+<DIV><STRONG>Classification properties</STRONG></DIV>
+<DIV>&nbsp;</DIV></TD>
+    <TD nowrap valign="top" align="right"><STRONG>list-style</STRONG></TD>
+    <TD>
+<DIV><STRONG>specifies</STRONG> up to three of the following values, in any order: type, position, image.</DIV>
+<DIV>See: <A href="http://www.w3.org/TR/CSS1#list-style">Cascading Style Sheets, level 1</A></DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>list-style-image</STRONG></TD>
+    <TD>
+<DIV><STRONG>specifies</STRONG> one of the following values.</DIV>
+      <TABLE>
+        <TR>
+          <TD>none</TD>
+          <TD>Default. No image is specified.</TD>
+        </TR>
+        <TR>
+          <TD>url(sURL)</TD>
+          <TD>Location of the image, where sURL is an absolute or relative URL.</TD>
+        </TR>
+      </TABLE></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>list-style-position</STRONG></TD>
+    <TD>
+<DIV><STRONG>specifies</STRONG> one of the following values.</DIV>
+      <TABLE>
+        <TR>
+          <TD>outside</TD>
+          <TD>Default. Marker is placed outside the text, and any wrapping text is not aligned under the marker.</TD>
+        </TR>
+        <TR>
+          <TD>inside</TD>
+          <TD>Marker is placed inside the text, and any wrapping text is aligned under the marker.</TD>
+        </TR>
+      </TABLE></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>list-style-type</STRONG></TD>
+    <TD>
+<DIV><STRONG>specifies</STRONG> one of the following values.</DIV>
+      <TABLE>
+        <TR>
+          <TD nowrap valign="middle">disc</TD>
+          <TD>Default. Solid circles.</TD>
+        </TR>
+        <TR>
+          <TD nowrap valign="middle">circle</TD>
+          <TD>Outlined circles.</TD>
+        </TR>
+        <TR>
+          <TD nowrap valign="middle">square</TD>
+          <TD>Solid squares.</TD>
+        </TR>
+        <TR>
+          <TD nowrap valign="middle">decimal</TD>
+          <TD>1, 2, 3, 4, and so on.</TD>
+        </TR>
+        <TR>
+          <TD nowrap valign="middle">lower-roman</TD>
+          <TD>i, ii, iii, iv, and so on.</TD>
+        </TR>
+        <TR>
+          <TD nowrap valign="middle">upper-roman</TD>
+          <TD>I, II, III, IV, and so on.</TD>
+        </TR>
+        <TR>
+          <TD nowrap valign="middle">lower-alpha</TD>
+          <TD>a, b, c, d, and so on.</TD>
+        </TR>
+        <TR>
+          <TD nowrap valign="middle">upper-alpha</TD>
+          <TD>A, B, C, D, and so on.</TD>
+        </TR>
+        <TR>
+          <TD nowrap bgcolor=#ffe4ca valign="middle">tree-line</TD>
+          <TD bgcolor=#ffe4ca valign="middle">Draws tree lines</TD>
+        </TR>
+        <TR>
+          <TD nowrap valign="middle">none</TD>
+          <TD>No marker is shown.</TD>
+        </TR>
+      </TABLE></TD>
+  </TR>
+  <TR>
+    <TD nowrap bgcolor=#ffe4ca valign="top" align="right"><STRONG>list-marker-color</STRONG></TD>
+    <TD bgcolor=#ffe4ca>Sets the color of the list marker (bullet, number or tree line)</TD>
+  </TR>
+  <TR>
+    <TD nowrap bgcolor=#ffe4ca valign="top" align="right"><STRONG>list-marker-size</STRONG></TD>
+    <TD bgcolor=#ffe4ca>Sets size of font used for drawing bullets and numbers. For list-style-type:tree-line this attribute defines width of tree line.</TD>
+  </TR>
+  <TR>
+    <TD nowrap bgcolor=#ffe4ca valign="top" align="right"><STRONG>list-marker-style</STRONG></TD>
+    <TD bgcolor=#ffe4ca>
+<DIV>For list-style-type:tree-line this attribute defines style of the tree line:</DIV>
+      <TABLE>
+        <TR>
+          <TD>none</TD>
+          <TD>Default. Line is not drawn, regardless of any border width.</TD>
+        </TR>
+        <TR>
+          <TD>dotted</TD>
+          <TD>Dotted line.</TD>
+        </TR>
+        <TR>
+          <TD>dashed</TD>
+          <TD>Dashed line.</TD>
+        </TR>
+        <TR>
+          <TD>solid</TD>
+          <TD>Border is a solid line.</TD>
+        </TR>
+      </TABLE></TD>
+  </TR>
+  <TR>
+    <TD rowspan="17" valign="top">
+<DIV><STRONG>Positioning and dimensional properties</STRONG></DIV>
+<DIV>&nbsp;</DIV></TD>
+    <TD nowrap valign="top" align="right"><STRONG>position</STRONG></TD>
+    <TD>static | relative | absolute | fixed<BR>As per <A href="http://www.w3.org/TR/REC-CSS2/visuren.html#positioning-scheme">CSS2 recommendation</A>.</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>left</STRONG></TD>
+    <TD rowspan="4">
+<DIV>As per <A href="http://www.w3.org/TR/REC-CSS2/visuren.html#positioning-scheme">CSS2 recommendation</A>.</DIV>
+<DIV><STRONG>Value</STRONG> that specifies one of the following values.</DIV>
+      <TABLE>
+        <TR>
+          <TD>auto</TD>
+          <TD>Default. &nbsp;</TD>
+        </TR>
+        <TR>
+          <TD>height</TD>
+          <TD>Floating-point number followed by an absolute units designator (cm, mm, in, pt, pc, or px) or a relative units designator (em or ex). For more information about the supported length units, see <A href="http://www.w3.org/TR/CSS1#length-units">CSS Length Units Reference</A>.</TD>
+        </TR>
+        <TR>
+          <TD>percentage</TD>
+          <TD>Integer followed by a percent sign (%). The value is a percentage of the height of the parent object, which must be specified explicitly. Negative values are not allowed.</TD>
+        </TR>
+        <TR>
+          <TD>calc(...)</TD>
+          <TD><A href="csss!-calc-function.htm">the calc function</A>.</TD>
+        </TR>
+      </TABLE></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>right</STRONG></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>top</STRONG></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>bottom</STRONG></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>height</STRONG></TD>
+    <TD>
+<DIV><STRONG>Value</STRONG> that specifies one of the following values.</DIV>
+      <TABLE>
+        <TR>
+          <TD valign="top">auto</TD>
+          <TD>Default. &nbsp;</TD>
+        </TR>
+        <TR>
+          <TD valign="top">height</TD>
+          <TD>Floating-point number followed by an absolute units designator (cm, mm, in, pt, pc, or px) or a relative units designator (em or ex). For more information about the supported length units, see <A href="http://www.w3.org/TR/CSS1#length-units">CSS Length Units Reference</A>.</TD>
+        </TR>
+        <TR>
+          <TD valign="top">percentage</TD>
+          <TD>Integer followed by a percent sign (%). The value is a percentage of the height of the parent object, which must be specified explicitly. Negative values are not allowed.</TD>
+        </TR>
+        <TR>
+          <TD valign="top"><STRONG>%% units</STRONG></TD>
+          <TD bgcolor=#ffe4ca valign="middle">Percentage of free space.</TD>
+        </TR>
+        <TR>
+          <TD valign="top"><STRONG>width(NN%)</STRONG></TD>
+          <TD bgcolor=#ffe4ca valign="middle">Will set height as a percentage of width of the element itself. This allow element to maintain its aspect ratio.</TD>
+        </TR>
+        <TR>
+          <TD>calc(...)</TD>
+          <TD><A href="csss!-calc-function.htm">the calc function</A>.</TD>
+        </TR>
+      </TABLE></TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>z-index</STRONG></TD>
+    <TD>As per <A href="http://www.w3.org/TR/REC-CSS2/visuren.html#z-index">CSS2</A>.</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>overflow</STRONG></TD>
+    <TD valign="middle">
+<DIV>overflow-type [scroll-manner]. First overflow-type value specifies one of the following values. Shortcut attribute of overflow-x and overflow-y</DIV>
+      <TABLE>
+        <TR>
+          <TD>visible</TD>
+          <TD>Default. Content is not clipped and scroll bars are not added.</TD>
+        </TR>
+        <TR>
+          <TD>scroll</TD>
+          <TD>Content is clipped and scroll bars are added, even if the content does not exceed the dimensions of the object.</TD>
+        </TR>
+        <TR>
+          <TD>hidden</TD>
+          <TD>Content that exceeds the dimensions of the object is not shown. Content is not scrollable by UI.</TD>
+        </TR>
+        <TR>
+          <TD>auto</TD>
+          <TD>Content is clipped and scrolling is added only when necessary.</TD>
+        </TR>
+        <TR>
+          <TD bgcolor=#ffe4ca valign="middle">hidden-scroll</TD>
+          <TD bgcolor=#ffe4ca valign="middle">The scrollbar is not shown but content the element is scrollable.</TD>
+        </TR>
+      </TABLE>
+<DIV>Second (optional) parameter is a definition of the scroll-manner() function, see defintion of the scroll-manner below.</DIV></TD>
+  </TR>
+  <TR>
+    <TD valign="top" align="right"><STRONG>overflow-x<BR>overflow-y</STRONG></TD>
+    <TD>
+<DIV>overflow-type [scroll-manner]. First overflow-type value specifies one of the following values:</DIV>
+      <TABLE>
+        <TR>
+          <TD>visible</TD>
+          <TD>Default. Content is not clipped and scroll bars are not added.</TD>
+        </TR>
+        <TR>
+          <TD>scroll</TD>
+          <TD>Content is clipped and scroll bars are added, even if the content does not exceed the dimensions of the object.</TD>
+        </TR>
+        <TR>
+          <TD>hidden</TD>
+          <TD>Content that exceeds the dimensions of the object is not shown.</TD>
+        </TR>
+        <TR>
+          <TD>auto</TD>
+          <TD>Content is clipped and scrolling is added only when necessary.</TD>
+        </TR>
+        <TR>
+          <TD bgcolor=#ffe4ca valign="middle">hidden-scroll</TD>
+          <TD bgcolor=#ffe4ca valign="middle">The scrollbar is not shown but content the element is scrollable.</TD>
+        </TR>
+      </TABLE>
+<DIV>Second (optional) parameter is a definition of the scroll-manner() function, see defintion of the scroll-manner below.</DIV></TD>
+  </TR>
+  <TR>
+    <TD bgcolor=#ffe4ca valign="top" align="right">
+<DIV><STRONG>scroll-manner</STRONG></DIV>
+<DIV><STRONG>scroll-manner-x</STRONG></DIV>
+<DIV><STRONG>scroll-manner-y</STRONG></DIV></TD>
+    <TD bgcolor=#ffe4ca>
+<DIV>These attributes accept single value. It can be either <EM>auto</EM> or function definition named <EM>scroll-manner()</EM> with the following parameters:</DIV>
+      <TABLE>
+        <TR>
+          <TD nowrap valign="top"><EM>page-animation</EM></TD>
+          <TD>: true | false, if true then PAGE UP/DOWN keys are causing smooth scroll animation.</TD>
+        </TR>
+        <TR>
+          <TD nowrap valign="top"><EM>step-animation</EM></TD>
+          <TD>: true | false, if true then UP/DOWN keys are causing smooth scroll animation.</TD>
+        </TR>
+        <TR>
+          <TD nowrap valign="top"><EM>home-animation</EM></TD>
+          <TD>: true | false, if true then HOME/END keys are causing smooth scroll animation.</TD>
+        </TR>
+        <TR>
+          <TD nowrap valign="top"><EM>wheel-animation</EM></TD>
+          <TD>: true | false, if true then MOUSE WHEEL events are causing smooth scroll animation.</TD>
+        </TR>
+        <TR>
+          <TD nowrap valign="top"><EM>step</EM></TD>
+          <TD>
+<DIV>: length | percent | auto. <EM>auto</EM> means &quot;integral step&quot; - single scroll step (UP/DOWN keys) is computed according to dimension of first visible item. In case of length value scroll step will be equal to that value converted to pixels. Percentage value is computed against corresponding dimension of the element.</DIV>
+<DIV>Default value is 6.25% (1/16) of width or height.</DIV></TD>
+        </TR>
+        <TR>
+          <TD nowrap valign="top"><EM>page</EM></TD>
+          <TD>
+<DIV>: length | percent | auto. <EM>auto</EM> means &quot;integral step&quot; - single scroll step (UP/DOWN keys) is computed according to dimension of last visible item. In case of length value scroll step will be equal to that value converted to pixels. Percentage value is computed against corresponding dimension of the element.</DIV>
+<DIV>Default value is 100% - whole width or height of the scrollable area of the element.</DIV></TD>
+        </TR>
+      </TABLE>
+<DIV>Example of scroll manner style definition:</DIV>
+<DIV><FONT face="Courier New">div#scrollable {</FONT></DIV>
+<DIV><FONT face="Courier New"> &nbsp;overflow:auto;</FONT></DIV>
+<DIV><STRONG><FONT face="Courier New"> &nbsp;scroll-manner</STRONG>: scroll-manner( page-animation:true,</FONT></DIV>
+<DIV><FONT face="Courier New"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;step-animation:false, &nbsp;&nbsp;</FONT></DIV>
+<DIV><FONT face="Courier New">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;step:auto );</FONT></DIV>
+<DIV><FONT face="Courier New">}</FONT></DIV></TD>
+  </TR>
+  <TR>
+    <TD valign="top" align="right"><STRONG>width</STRONG></TD>
+    <TD>
+<DIV>specifies one of the following values.</DIV>
+      <TABLE>
+        <TR>
+          <TD>auto</TD>
+          <TD>Default. Default width of the object.</TD>
+        </TR>
+        <TR>
+          <TD>width</TD>
+          <TD>Floating-point number, followed by an absolute units designator (cm, mm, in, pt, pc, or px) or a relative units designator (em or ex). For more information about the supported length units, see <A href="http://www.w3.org/TR/CSS1#length-units">CSS Length Units Reference</A>.</TD>
+        </TR>
+        <TR>
+          <TD>percentage</TD>
+          <TD>Integer, followed by a %. The value is a percentage of the width of the parent object, whether or not it is specified explicitly. Negative values are not allowed.</TD>
+        </TR>
+        <TR>
+          <TD bgcolor=#ffe4ca valign="middle"><STRONG>%% units</STRONG></TD>
+          <TD bgcolor=#ffe4ca valign="middle"><STRONG>Percentage of free space in the container.</STRONG></TD>
+        </TR>
+        <TR>
+          <TD>calc(...)</TD>
+          <TD><A href="csss!-calc-function.htm">the calc function</A>.</TD>
+        </TR>
+      </TABLE></TD>
+  </TR>
+  <TR>
+    <TD valign="top" align="right"><STRONG>min-height</STRONG></TD>
+    <TD>
+<DIV>specifies the minimum height for an element.</DIV>
+      <TABLE>
+        <TR>
+          <TD>length</TD>
+          <TD>Floating-point number followed by an absolute units designator (cm, mm, in, pt, pc, or px) or a relative units designator (em or ex). For more information about the supported length units, see <A href="http://www.w3.org/TR/CSS1#length-units">CSS Length Units Reference</A>.</TD>
+        </TR>
+        <TR>
+          <TD>percentage</TD>
+          <TD>Integer followed by a % that specifies a percentage of the containing block height to use as the minimum height of the element. If the height of the containing block is not explicitly set, then the element has no minimum height and the property is interpreted as 0%. For more information on containing blocks and how its height is computed, see the <A href="http://www.w3.org/tr/rec-css2" target="_top">Cascading Style Sheets, Level 2 (CSS2)</A> specification.</TD>
+        </TR>
+        <TR>
+          <TD valign="top"><STRONG>width(NN%)</STRONG></TD>
+          <TD bgcolor=#ffe4ca valign="middle">Will set min-height as a percentage of width of the element itself. This allow element to maintain its aspect ratio.</TD>
+        </TR>
+        <TR>
+          <TD>calc(...)</TD>
+          <TD><A href="csss!-calc-function.htm">the calc function</A>.</TD>
+        </TR>
+      </TABLE></TD>
+  </TR>
+  <TR>
+    <TD valign="top" align="right"><STRONG>min-width</STRONG></TD>
+    <TD>
+<DIV>specifies the minimum width for an element.</DIV>
+      <TABLE>
+        <TR>
+          <TD>length</TD>
+          <TD>Floating-point number followed by an absolute units designator (cm, mm, in, pt, pc, or px) or a relative units designator (em or ex). For more information about the supported length units, see <A href="http://www.w3.org/TR/CSS1#length-units">CSS Length Units Reference</A>.</TD>
+        </TR>
+        <TR>
+          <TD>percentage</TD>
+          <TD>
+<DIV>Integer, followed by a %. The value is a percentage of the width of the parent object, whether or not it is specified explicitly. Negative values are not allowed.</DIV>
+<DIV>For more information on containing blocks and how its width is computed, see the <A href="http://www.w3.org/tr/rec-css2" target="_top">Cascading Style Sheets, Level 2 (CSS2)</A> specification.</DIV></TD>
+        </TR>
+        <TR>
+          <TD bgcolor=#ffe4ca valign="middle">auto</TD>
+          <TD bgcolor=#ffe4ca valign="middle">
+<DIV>min-width is equal to minimum intrinsic width of the element.</DIV>
+<DIV>In HTMLayout all elements are getting this value by default to mimic Internet Explorer behavior. Non standard.</DIV></TD>
+        </TR>
+        <TR>
+          <TD>calc(...)</TD>
+          <TD><A href="csss!-calc-function.htm">the calc function</A>.</TD>
+        </TR>
+      </TABLE></TD>
+  </TR>
+  <TR>
+    <TD valign="top" align="right"><STRONG>max-height</STRONG></TD>
+    <TD>
+<DIV>specifies the maximum height for an element.</DIV>
+      <TABLE>
+        <TR>
+          <TD>length</TD>
+          <TD>Floating-point number followed by an absolute units designator (cm, mm, in, pt, pc, or px) or a relative units designator (em or ex). For more information about the supported length units, see <A href="http://www.w3.org/TR/CSS1#length-units">CSS Length Units Reference</A>.</TD>
+        </TR>
+        <TR>
+          <TD>percentage</TD>
+          <TD>
+<DIV>Integer, followed by a %. The value is a percentage of the width of the parent object, whether or not it is specified explicitly. Negative values are not allowed.</DIV>
+<DIV>For more information on containing blocks and how its width is computed, see the <A href="http://www.w3.org/tr/rec-css2" target="_top">Cascading Style Sheets, Level 2 (CSS2)</A> specification.</DIV></TD>
+        </TR>
+        <TR>
+          <TD valign="top"><STRONG>width(NN%)</STRONG></TD>
+          <TD bgcolor=#ffe4ca valign="middle">Will set height as a percentage of width of the element itself. This allow element to maintain its aspect ratio.</TD>
+        </TR>
+        <TR>
+          <TD>calc(...)</TD>
+          <TD><A href="csss!-calc-function.htm">the calc function</A>.</TD>
+        </TR>
+      </TABLE></TD>
+  </TR>
+  <TR>
+    <TD valign="top" align="right"><STRONG>max-width</STRONG></TD>
+    <TD>
+<DIV>specifies the maximum width for an element.</DIV>
+      <TABLE>
+        <TR>
+          <TD>length</TD>
+          <TD>Floating-point number followed by an absolute units designator (cm, mm, in, pt, pc, or px) or a relative units designator (em or ex). For more information about the supported length units, see <A href="http://www.w3.org/TR/CSS1#length-units">CSS Length Units Reference</A>.</TD>
+        </TR>
+        <TR>
+          <TD>percentage</TD>
+          <TD>
+<DIV>Integer, followed by a %. The value is a percentage of the width of the parent object, whether or not it is specified explicitly. Negative values are not allowed.</DIV>
+<DIV>For more information on containing blocks and how its width is computed, see the <A href="http://www.w3.org/tr/rec-css2" target="_top">Cascading Style Sheets, Level 2 (CSS2)</A> specification.</DIV></TD>
+        </TR>
+        <TR>
+          <TD bgcolor=#ffe4ca valign="middle">auto</TD>
+          <TD bgcolor=#ffe4ca valign="middle">
+<DIV>max-width is equal to maximum intrinsic width of the element.</DIV>
+<DIV>In HTMLayout &lt;TABLE&gt; element has this value by default. This allow to model table dimensions when no width attribute set.</DIV>
+<DIV>Non standard.</DIV>
+<DIV>Example, table looks like as max-width:auto set:</DIV>
+            <TABLE border="1" cellspacing="1">
+              <TR>
+                <TD>This table has no width set.</TD>
+              </TR>
+            </TABLE></TD>
+        </TR>
+        <TR>
+          <TD>calc(...)</TD>
+          <TD><A href="csss!-calc-function.htm">the calc function</A>.</TD>
+        </TR>
+      </TABLE></TD>
+  </TR>
+  <TR>
+    <TD bgcolor=#ffe4ca valign="top" align="right"><A name="flow-attribute"><STRONG>flow</STRONG></A></STRONG></TD>
+    <TD bgcolor=#ffe4ca valign="middle">
+<DIV>Flow direction of child elements in block containers (e.g. DIVs). This attribute defines type of <EM>layout manager</EM> (LM) used by the block container.</DIV>
+      <TABLE>
+        <TR>
+          <TD><STRONG>vertical</STRONG></TD>
+          <TD>Default value. All child elements in block element placed from top to bottom. Standard behavior of DIV in HTML</TD>
+        </TR>
+        <TR>
+          <TD><STRONG>horizontal</STRONG></TD>
+          <TD>All child blocks placed from left to right in a single row.</TD>
+        </TR>
+        <TR>
+          <TD><STRONG>horizontal-flow</STRONG></TD>
+          <TD>Multiple rows. All child blocks placed from left to right. Overflowed blocks wrapped on the next row. height:100%% for blocks in this layout means height of the row.</TD>
+        </TR>
+        <TR>
+          <TD><STRONG>vertical-flow</STRONG></TD>
+          <TD>Multiple columns. All child blocks placed from top to bottom. Overflowed blocks wrapped on the next column. width:100%% for blocks in this layout correspond to the width of the column.</TD>
+        </TR>
+        <TR>
+          <TD><STRONG>&quot;...template...&quot;</STRONG></TD>
+          <TD>&nbsp;</TD>
+        </TR>
+      </TABLE>
+<DIV>See <A href="http://www.terrainformatica.com/w3/flex-layout/flex-layout.htm">Flow and Flex Units</A> document for more information.</DIV></TD>
+  </TR>
+  <TR>
+    <TD bgcolor=#ffe4ca valign="top" align="right"><A name="hit-margin"><STRONG>hit-margin</STRONG></A></STRONG></TD>
+    <TD bgcolor=#ffe4ca valign="middle">specifies up to four of the following space-delimited values. Notation is the same as for the <EM>margin</EM> attribute. hit-margin defines &quot;hover area&quot; of the element. Positive values increase hover area and negative values decrease it. Hit margins are calculated from border box of the element.</TD>
+  </TR>
+  <TR>
+    <TD rowspan="5" valign="top">
+<DIV><STRONG>Outline</STRONG></DIV>
+<P><FONT size="1">Outlines similar to borders but differ from them in the following ways:</FONT></P>
+<DIV><FONT size="1">1. Outlines do not take up space.</FONT></DIV>
+<DIV><FONT size="1">2. All sides of outline rectangle has equal property values.</FONT></DIV>
+<P>&nbsp;</P></TD>
+    <TD valign="top" align="right"><STRONG>outline</STRONG></TD>
+    <TD nowrap valign="top">
+<DIV>shortcut attribute, accepts up to four values:</DIV>
+<DIV>[ &lt;'outline-color'&gt; || &lt;'outline-style'&gt; || [&lt;'outline-width'&gt; [ &lt;'outline-offset'&gt; ] ]</DIV></TD>
+  </TR>
+  <TR>
+    <TD valign="top" align="right"><STRONG>outline-width</STRONG></TD>
+    <TD nowrap valign="top">
+<DIV>Width of outline:</DIV>
+      <TABLE>
+        <TR>
+          <TD width="84" align="right"><EM>medium</EM></TD>
+          <TD>Default. &nbsp;</TD>
+        </TR>
+        <TR>
+          <TD align="right"><EM>thin</EM></TD>
+          <TD>Less than the default width.</TD>
+        </TR>
+        <TR>
+          <TD align="right"><EM>thick</EM></TD>
+          <TD>Greater than the default width.</TD>
+        </TR>
+        <TR>
+          <TD align="right"><EM>width</EM></TD>
+          <TD>Floating-point number, followed by an absolute units designator (cm, mm, in, pt, pc, or px) or a relative units designator (em or ex). For more information about the supported length units, see <A href="http://www.w3.org/TR/CSS1#length-units">CSS Length Units Reference</A>.</TD>
+        </TR>
+        <TR>
+          <TD>calc(...)</TD>
+          <TD><A href="csss!-calc-function.htm">the calc function</A>.</TD>
+        </TR>
+      </TABLE></TD>
+  </TR>
+  <TR>
+    <TD valign="top" align="right"><STRONG>outline-style</STRONG></TD>
+    <TD nowrap valign="top">
+<DIV>specifies one of the following values.</DIV>
+      <TABLE>
+        <TR>
+          <TD align="right"><EM>none</EM></TD>
+          <TD>Default. Border is not drawn, regardless of any border width.</TD>
+        </TR>
+        <TR>
+          <TD align="right"><EM>dotted</EM></TD>
+          <TD>outline is a dotted line.</TD>
+        </TR>
+        <TR>
+          <TD align="right"><EM>dashed</EM></TD>
+          <TD>outline is a dashed line.</TD>
+        </TR>
+        <TR>
+          <TD align="right"><EM>solid</EM></TD>
+          <TD>outline is a solid line.</TD>
+        </TR>
+      </TABLE></TD>
+  </TR>
+  <TR>
+    <TD valign="top" align="right"><STRONG>outline-color</STRONG></TD>
+    <TD nowrap valign="top">color of the outline.</TD>
+  </TR>
+  <TR>
+    <TD valign="top" align="right"><STRONG>outline-offset</STRONG></TD>
+    <TD valign="top">Length units, offset of outline. Positive values - offset outwards, negative values - offset inwards. CSS3 attribute.</TD>
+  </TR>
+  <TR>
+    <TD rowspan="5" valign="top">
+<DIV><STRONG>Pseudo-classes and other properties</STRONG></DIV>
+<DIV>&nbsp;</DIV></TD>
+    <TD nowrap valign="top" align="right"><STRONG>cursor</STRONG></TD>
+    <TD><EM>auto | crosshair | default | pointer | move | e-resize | ne-resize | nw-resize | n-resize | se-resize | sw-resize | s-resize | w-resize | text | wait | help | progress</EM> values or url of .cur or .ani file.</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>display</STRONG></TD>
+    <TD>As per CSS1.</TD>
+  </TR>
+  <TR>
+    <TD nowrap valign="top" align="right"><STRONG>visibility</STRONG></TD>
+    <TD>
+      <TABLE>
+        <TR>
+          <TD align="right"><EM>visible</EM></TD>
+          <TD>Default. element is visible and takes space;</TD>
+        </TR>
+        <TR>
+          <TD align="right"><EM>hidden</EM></TD>
+          <TD>element takes space but is invisible;</TD>
+        </TR>
+        <TR>
+          <TD align="right"><EM>collapse</EM></TD>
+          <TD>element takes no space and is invisible;</TD>
+        </TR>
+      </TABLE>
+<P><FONT color=#990033>ATTN: meaning of <EM>collapse</EM> is extended to support of not only rows in tables as per standard CSS but it is applicable for all other elements. <EM>visibility: collapse</EM> is an equivalent of <EM>display:none</EM> but collapsed elements participate in computation of intrinsic widths of containers thus dynamic change of visibility:visible to visibility:collapse will not change computed width of container element.</FONT></P>
+<P><FONT color=#990033>Changing of visibility:visible/collapse is recommended for dynamic hide/show effects. It is easy to hide element by setting display:none to reenable its appearance is difficult - there many display values to choose from: block, inline-block, list-item, etc.</FONT></P></TD>
+  </TR>
+  <TR>
+    <TD bgcolor=#ffffdd valign="top" align="right"><STRONG>direction</STRONG></TD>
+    <TD bgcolor=#ffffdd>
+<DIV>specifies one of the following values.</DIV>
+      <TABLE>
+        <TR>
+          <TD>ltr</TD>
+          <TD>Default. Content flows left to right.</TD>
+        </TR>
+        <TR>
+          <TD>rtl</TD>
+          <TD>Content flows right to left.</TD>
+        </TR>
+        <TR>
+          <TD>inherit</TD>
+          <TD>Content flow is inherited.</TD>
+        </TR>
+      </TABLE></TD>
+  </TR>
+  <TR>
+    <TD bgcolor=#ffffdd valign="top" align="right"><STRONG>transition</STRONG></TD>
+    <TD bgcolor=#ffffdd>
+<DIV>none | blend | slide | image</DIV>
+<DIV>Defines transition effect of changing of element state. For example:</DIV>
+<P>.mybutton:hover { color: red; <EM>transition:blend</EM> }</P>
+<DIV>will render transition by gradually blending (mixing) original state and hover state.</DIV>
+<DIV>Currently transition supported only for block and inline-block elements and tables.</DIV></TD>
+  </TR>
+  <TR>
+    <TD rowspan="2" valign="top">
+<DIV><STRONG>Paged media (printing)</STRONG></DIV>
+<P>&nbsp;</P></TD>
+    <TD valign="top" align="right"><STRONG>page-break-before</STRONG></TD>
+    <TD nowrap valign="top">
+<DIV>Value that specifies one of the following values:</DIV>
+      <TABLE>
+        <TR>
+          <TD>auto</TD>
+          <TD>- default.</TD>
+        </TR>
+        <TR>
+          <TD>always</TD>
+          <TD>- always insert page break before this element.</TD>
+        </TR>
+        <TR>
+          <TD bgcolor=#ffe4ca valign="middle">percentage</TD>
+          <TD bgcolor=#ffe4ca valign="middle">- integer followed by a percent sign (%). <STRONG>Conditional page break</STRONG>. The value is a percentage of the height of the page. Engine will insert page break only if position of the element on the page is greater than this value.</TD>
+        </TR>
+      </TABLE></TD>
+  </TR>
+  <TR>
+    <TD valign="top" align="right"><STRONG>page-break-after</STRONG></TD>
+    <TD nowrap valign="top">
+<DIV>Value that specifies one of the following values:</DIV>
+      <TABLE>
+        <TR>
+          <TD>auto</TD>
+          <TD>- default.</TD>
+        </TR>
+        <TR>
+          <TD>always</TD>
+          <TD>- always insert page break after this element.</TD>
+        </TR>
+        <TR>
+          <TD bgcolor=#ffe4ca valign="middle">percentage</TD>
+          <TD bgcolor=#ffe4ca valign="middle">- integer followed by a percent sign (%). <STRONG>Conditional page break</STRONG>. The value is a percentage of the height of the page. Engine will insert page break after this element only if bottom position of the element on the page is greater than this value.</TD>
+        </TR>
+      </TABLE></TD>
+  </TR>
+  <TR>
+    <TD rowspan="2" bgcolor=#ffe4ca valign="top"><STRONG>Behavioral &nbsp;attributes</STRONG></TD>
+    <TD nowrap bgcolor=#ffe4ca valign="top" align="right"><STRONG>behavior</STRONG></TD>
+    <TD bgcolor=#ffe4ca>
+<DIV>list of whitespace delimeted <A href="http://www.w3.org/TR/REC-xml/#NT-Nmtoken">nmtoken</A>s - names of behaviors applied to this element.</DIV>
+<DIV>List may contain '~' symbol in front or at the end of the list:</DIV>
+<UL>
+<LI><EM>behavior: <STRONG>~</STRONG> new-behavior;</EM> will update list of behaviors defined before for the element, and</LI>
+<LI><EM>behavior: new-behavior <STRONG>~</STRONG>;</EM> will insert new-behavior in front of behaviors defined before for the element.</LI></UL>
+
+<P>Behavior is the name of builtin or application defined class of behavior. List of standard (builtin) behaviors is <A href="http://www.terrainformatica.com/htmlayout/behaviors.whtm">here</A>.</P></TD>
+  </TR>
+  <TR>
+    <TD nowrap bgcolor=#ffe4ca valign="top" align="right"><STRONG>prototype</STRONG></TD>
+    <TD bgcolor=#ffe4ca>
+<DIV><EM>name</EM> [ <EM>url(...)</EM> ]</DIV>
+<P><FONT color=#ff0000>Only in Sciter!</FONT></P>
+<DIV>Name of the class in the script - prototype scripting object (class) of this element. Such a class can define methods, properties and event handling methods of the whole class of elements this style applies to. To use compound names like <EM>namespace.class</EM> enclose them into quotes: <FONT face="Courier New">prototype: &quot;Module.CoolWidget&quot;;</FONT></DIV>
+<P>If <EM>url</EM> part is provided then the engine will make an attempt to load that script file before trying to find behavior class &nbsp;(if the file was not loaded already). &nbsp;</P></TD>
+  </TR>
+  <TR>
+    <TD rowspan="3" bgcolor=#ffe4ca valign="top"><STRONG>Other attributes</STRONG></TD>
+    <TD nowrap bgcolor=#ffe4ca valign="top" align="right"><STRONG>content</STRONG></TD>
+    <TD bgcolor=#ffe4ca>
+<DIV><FONT color=#ff0000>&quot;some string&quot;. </FONT>Allows to redefine textual content of the element in style. In h-smile <EM>content</EM> is can be applied to the element itself.</DIV>
+<DIV>This allow to define different captions of some element by CSS using for example some attribute as a switch:</DIV>
+<BLOCKQUOTE>
+<BLOCKQUOTE>
+<DIV><FONT face="Courier New">p.status[state=&quot;pending&quot;] { content: &quot;Pending&quot;; foreground-image:...; }</FONT></DIV>
+<DIV><FONT face="Courier New">p.status[state=&quot;done&quot;] { content: &quot;Done&quot;; foreground-image:...; }</FONT></DIV>
+<DIV><FONT face="Courier New">p.status[state=&quot;warning&quot;] { content: &quot;Warning!&quot;; foreground-image:...; }</FONT></DIV></BLOCKQUOTE>
+</BLOCKQUOTE>
+
+<DIV><EM>content</EM> is applicable only to elements that allowed to have textual content. E.g. it will work for P, SPAN, etc. but not for DIV.</DIV></TD>
+  </TR>
+  <TR>
+    <TD nowrap bgcolor=#ffe4ca valign="top" align="right"><STRONG>vertical-scrollbar</STRONG></TD>
+    <TD bgcolor=#ffe4ca><FONT color=#ff0000>&quot;style-set-name&quot;</FONT> - style set name that defines styles of vertical scrollbar.</TD>
+  </TR>
+  <TR>
+    <TD nowrap bgcolor=#ffe4ca valign="top" align="right"><STRONG>horizontal-scrollbar</STRONG></TD>
+    <TD bgcolor=#ffe4ca><FONT color=#ff0000>&quot;style-set-name&quot;</FONT> - style set name that defines styles of horizontal scrollbar. See: html_samples/css-plus/scrollbar-styling.htm of how is should be defined.</TD>
+  </TR>
+</TABLE>
+</DIV>
+<H3 align="left">Length units</H3>
+<P align="left">The engine supports following length units:</P>
+<UL>
+<LI><STRONG>px</STRONG> - pixels, relative to the viewing device. <FONT color=#990033>On screen 1px is exactly one device pixel. On printer 1px is equal to 1/96 of inch.</FONT></LI>
+<LI><STRONG>em</STRONG> - the <EM>font-size</EM> of the relevant font;</LI>
+<LI><STRONG>ex</STRONG> - the <EM>x-height</EM> of the relevant font;</LI>
+<LI><STRONG>in</STRONG> - inches — 1 inch is equal to 2.54 centimeters;</LI>
+<LI><STRONG>cm</STRONG> - centimeters;</LI>
+<LI><STRONG>mm</STRONG> - millimeters;</LI>
+<LI><STRONG>pt</STRONG> - points — the points used by CSS 2.1 are equal to 1/72nd of an inch;</LI>
+<LI><STRONG>pc</STRONG> - picas — 1 pica is equal to 12 points;</LI>
+<LI><STRONG>%</STRONG> - percent — usually equals to precentage value of correspondent metric of parent element. But not always, see CSS specification.</LI>
+<LI><STRONG><FONT color=#990033>%%</STRONG> - flex (&quot;weight&quot;) — see <A href="http://www.terrainformatica.com/htmlayout/fspu.whtm">h-smile flex units</A>.</FONT></LI>
+<LI><STRONG><FONT color=#990033>*</STRONG> - flex (&quot;weight&quot;) — 1* is equal to 100%%;</FONT></LI>
+<LI><STRONG><FONT color=#990033>dip - d</STRONG>evice <STRONG>i</STRONG>ndependent <STRONG>p</STRONG>ixels - logical units. 1dip = 1/96 of inch therefore on 96DPI display this will be one pixel. On high-dpi screens it will be resolved to larger number of physical pixels. For example: 2dip will take 3px on 120DPI screen. On printer 'dip' and 'px' units are equivalent.</FONT></LI></UL>
+
+<H3>Colors</H3>
+<P>Engine supports following forms of defining color constants:</P>
+<UL>
+<LI><FONT face="monospace">color: <STRONG>#f00</STRONG>; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- #rgb form.</FONT></LI>
+<LI><FONT face="monospace">color: <STRONG>#ff0000</STRONG> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- #rrggbb form.</FONT></LI>
+<LI><FONT face="monospace">color: <STRONG>rgb</STRONG>(255,0,0) &nbsp;&nbsp;&nbsp;- rgb(0..255,0..255,0..255) form.</FONT></LI>
+<LI><FONT face="monospace">color: <STRONG>rgb</STRONG>(100%,0%,0%) - rgb(0..100%,0..100%,0..100%) form.</FONT></LI>
+<LI><FONT face="monospace">color: <STRONG>hsl</STRONG>(300,0%,0%) &nbsp;- hsl(0..360,0..100%,0..100%) form - HSL color space.</FONT></LI>
+<LI><FONT face="monospace" color=#990033>color: <STRONG>tint</STRONG>(@base-color, 50%, 0%) - tint(base-color, -1.0..1.0 [, -1.0..1.0]) form.</FONT></LI></UL>
+
+<DIV><FONT face="monospace">tint(src-color, luminance-delta, saturation-delta)</FONT> function allows to define colors linked with some base color. Parameters:</DIV>
+<OL>
+<LI><FONT face="monospace">src-color</FONT> is a literal color value or some color @constant defined before.</LI>
+<LI><FONT face="monospace">luminance-delta</FONT> is a float value in range -1.0 .. +1.0 - relative increment of luminance value of original color:<BR><U><FONT face="monospace">if</U> luminance-delta &lt; 0 <U>then</U> final-luminance = src-luminance * abs(luminance-delta)<BR><U>if</U> luminance-delta &gt; 0 <U>then</U> final-luminance = (1.0 - src-luminance) * luminance-delta</FONT></LI>
+<LI><FONT face="monospace">saturation-delta, optional, </FONT>is a float value in range -1.0 .. +1.0 - relative increment of saturation value of original color:<FONT face="monospace"><BR><U>if</U> luminance-delta &lt; 0 <U>then</U> final-luminance = src-luminance * abs(luminance-delta)<BR><U>if</U> luminance-delta &gt; 0 <U>then</U> final-luminance = (1.0 - src-luminance) * luminance-delta</FONT></LI></OL>
+
+<P>Example, after following declarations:</P>
+<P><FONT face="monospace">@const <STRONG>BASE_COLOR</STRONG>: #FF0000; /*red*/<BR>li { border:1px solid tint( <STRONG>@BASE_COLOR</STRONG>, -0.5); }</FONT></P>
+<P>&lt;li&gt; elements will have borders of dark red color - #7F0000.</P><PRE>
+</PRE>
+</BODY>
+</HTML>

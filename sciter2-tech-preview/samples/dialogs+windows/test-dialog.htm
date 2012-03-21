@@ -1,0 +1,29 @@
+<html>
+  <head>
+  <title></title>
+<style></style>
+<script type="text/tiscript">
+
+  include "../decorators.tis";
+
+  @click @on "#show-dialog-1": 
+    {
+      var v = view.dialog( self.url("samples/sample-dialog-1.htm"));
+      stdout.$n(sample-dialog-1 result:{v});
+    }
+
+  @click @on "#show-dialog-2": 
+    {
+      var params = { one: "first", two: "second" }; // parameters to pass
+      var v = view.dialog( self.url("samples/sample-dialog-2.htm"), params );
+      stdout.$n(sample-dialog-2 result:{v});
+    }
+
+</script>
+  </head>
+<body>
+ Custom HTML dialogs:
+ <button #show-dialog-1>Show dialog</button>
+ <button #show-dialog-2>Show dialog with parameters</button>
+</body>
+</html>

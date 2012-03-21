@@ -1,0 +1,27 @@
+<html>
+<head>
+  <title>Simple dialog</title>
+  <style>
+    html 
+    { 
+      width:max-intrinsic; 
+      height:max-intrinsic; 
+      overflow:hidden; 
+    }
+  </style>
+  <script type="text/tiscript">
+    include "../decorators.tis";
+    
+    @click @on "#close-dialog":
+    {
+      view.close("Hello from Dialog");
+    }
+    </script>
+</head>
+<body>
+<h1>Sample dialog</h1>
+
+<button id="close-dialog">Close Dialog and return value</button>
+
+</body>
+</html>

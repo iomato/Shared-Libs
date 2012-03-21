@@ -1,0 +1,24 @@
+﻿  stdafx.cpp
+c:\hsmile5\sdk\include\aux-cvt.h(491): warning C4267: 'argument' : conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\hsmile5\sdk\include\aux-cvt.h(524): warning C4267: 'argument' : conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\hsmile5\sdk\include\aux-cvt.h(556): warning C4267: 'return' : conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\hsmile5\sdk\include\aux-cvt.h(581): warning C4267: 'return' : conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\hsmile5\sdk\include\aux-cvt.h(605): warning C4267: 'argument' : conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\hsmile5\sdk\include\value.h(298): warning C4267: 'return' : conversion from 'size_t' to 'int', possible loss of data
+c:\hsmile5\sdk\include\value.h(299): warning C4267: 'return' : conversion from 'size_t' to 'int', possible loss of data
+c:\hsmile5\sdk\include\value.h(368): warning C4267: 'argument' : conversion from 'size_t' to 'UINT', possible loss of data
+C:\hsmile5\sdk\include\sciter-x.h(521): warning C4267: 'initializing' : conversion from 'size_t' to 'unsigned int', possible loss of data
+  main.cpp
+C:\hsmile5\sdk\include\sciter-x-dom.hpp(564): warning C4267: 'argument' : conversion from 'size_t' to 'UINT', possible loss of data
+C:\hsmile5\sdk\include\sciter-x-dom.hpp(1063): warning C4267: '=' : conversion from 'size_t' to 'UINT', possible loss of data
+C:\hsmile5\sdk\include\sciter-x-dom.hpp(1081): warning C4267: '=' : conversion from 'size_t' to 'UINT', possible loss of data
+C:\hsmile5\sdk\include\sciter-x-dom.hpp(1090): warning C4267: '=' : conversion from 'size_t' to 'UINT', possible loss of data
+  sciter.cpp
+C:\hsmile5\sdk\include\sciter-x-dom.hpp(564): warning C4267: 'argument' : conversion from 'size_t' to 'UINT', possible loss of data
+C:\hsmile5\sdk\include\sciter-x-dom.hpp(1063): warning C4267: '=' : conversion from 'size_t' to 'UINT', possible loss of data
+C:\hsmile5\sdk\include\sciter-x-dom.hpp(1081): warning C4267: '=' : conversion from 'size_t' to 'UINT', possible loss of data
+C:\hsmile5\sdk\include\sciter-x-dom.hpp(1090): warning C4267: '=' : conversion from 'size_t' to 'UINT', possible loss of data
+sciter.cpp(354): warning C4267: 'initializing' : conversion from 'size_t' to 'unsigned int', possible loss of data
+  Generating code
+  Finished generating code
+  sciter.vcxproj -> C:\hsmile5\sdk\demos\sciter\..\..\bin\sciter64.exe

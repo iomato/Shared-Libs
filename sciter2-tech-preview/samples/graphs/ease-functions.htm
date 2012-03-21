@@ -1,0 +1,123 @@
+<html>
+  <head>
+    <style>
+      html { background-color:floralwhite; }
+      body { flow:horizontal; } 
+      figure
+      {
+        width:400px;
+        height:400px;
+        margin:30px;
+        border:1px dashed #7f0000;
+      }
+
+      div.controls
+      {
+        margin:30px;
+        height:400px;
+        width:*;
+      }
+      select#ease-funcs
+      {
+        display:block;
+        size:*;
+        flow:horizontal-flow;
+      }
+      select#ease-funcs > option 
+      {
+        max-width:auto;
+      }
+    </style>
+    <script type="text/tiscript">
+      include "../decorators.tis";
+      include "../ease-functions.tis";
+      include "graph.tis";
+      
+      var canvas = self.$(figure);
+      
+      function initList()
+      {
+        var sel = self.$(#ease-funcs);
+        for(var fn in Ease)
+        {
+          var opt = new Element(#option,fn.toString());
+          sel.insert(opt);
+        }
+      }
+      
+      initList();
+      
+      var easef = null; // ease function
+
+      // use of decorators:     
+      @change @on "#ease-funcs": evt
+      {
+        var fn = symbol(evt.target.value);
+        easef = Ease[fn]; 
+        functionChart( canvas, easef );
+      }
+      
+      function ball(playground)
+      {
+        var ballImg = playground.loadImage("ball.png");
+        var ballx = 0;
+        var bally = 0;
+        var ballw = ballImg.width;
+        var ballh = ballImg.height;
+        
+        playground.paintForeground = function(gfx)
+        {
+          gfx.drawImage(ballImg,ballx,bally);
+        }
+        
+        function refreshBall()
+        {
+          playground.refresh(ballx,bally,ballw,ballh);
+        }
+        
+        function moveTo(x,y)
+        {
+          var af = easef;
+          var srcx = ballx;
+          var srcy = bally;
+          x -= ballw / 2;
+          y -= ballh / 2;
+          var dx = x - ballx;
+          var dy = y - bally;
+         
+          function step(progress)
+          {
+            var k = af(progress);
+            refreshBall();
+            ballx = srcx + k * dx;
+            bally = srcy + k * dy;
+            refreshBall();
+          }
+          playground.animate(step, 600); // animate it in 800ms
+        }
+        
+        playground.onMouse = function(evt)
+        {
+          if( evt.type == Event.MOUSE_DOWN )
+            moveTo(evt.x,evt.y);
+        }
+
+      }
+      
+      function self.ready()
+      {
+        functionChart( canvas, easef = Ease.InOutBack );
+        ball(canvas);
+      }
+      
+    </script>
+  </head>
+<body>
+  <figure></figure>
+  <div .controls>
+    Select ease function:
+    <select #ease-funcs type="select" />
+    And click on canvas on the left.
+  </div>
+</body>
+</html>

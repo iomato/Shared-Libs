@@ -1,0 +1,193 @@
+<html>
+  <head>
+    <title>Sciter</title>
+    <style>
+      
+      @const BUTTON_BACK_NORMAL: url(theme:toolbar-button-normal) stretch;
+     	@const BUTTON_BACK_HOVER: url(theme:toolbar-button-hover) stretch;
+	    @const BUTTON_BACK_ACTIVE: url(theme:toolbar-button-pressed) stretch;
+	    @const BUTTON_BACK_CHECKED: url(theme:toolbar-button-checked) stretch;
+	    @const BUTTON_BACK_CHECKED_HOVER: url(theme:toolbar-button-checked-hover) stretch;
+	    @const BUTTON_BACK_DISABLED: url(theme:toolbar-button-disabled) stretch;
+            
+      html { background-color:#5C4C4C; } 
+      body {flow:horizontal; margin:0; }
+      div#toolbar { flow:vertical; width:max-intrinsic; padding:3px; }
+      div#toolbar > button                   
+      {
+        background: @BUTTON_BACK_NORMAL; 
+        display:block; 
+        foreground-repeat:no-repeat; 
+        foreground-position:50% 50%; size:32px; 
+        padding:4px;
+      }
+	    div#toolbar > button:hover          {  background: @BUTTON_BACK_HOVER; transition:blend(quad-in-out,300ms); }
+	    div#toolbar > button:active         {  background: @BUTTON_BACK_ACTIVE; foreground-position:53% 53%; }
+	    div#toolbar > button:checked	      {  background: @BUTTON_BACK_CHECKED;  }
+	    div#toolbar > button:checked:hover  {  background: @BUTTON_BACK_CHECKED_HOVER; }
+	    div#toolbar > button:disabled       {  background: @BUTTON_BACK_DISABLED; foreground-image-transformation:opacity(0.5); }
+	    frame#content{ size:*; border-left:1px solid threedshadow;
+	                   background:url(res:no-color.png) repeat; 
+	                   /*transition:blend-atop(linear,300ms);*/
+	                   }
+      frame#content > div#intro
+      { 
+        font: system;
+        background-color:window; padding:3px; 
+        size:*;
+      }
+      frame#content > div#intro > img#arrow { vertical-align:middle; size:0.8em; color:brown; }
+      
+      frame#content[allow-drop]
+      {
+          outline:2px orange solid -2px;
+      }
+            
+      div#toolbar > button#open { foreground-image:url(res:file-open.png); }
+      div#toolbar > button#reload { foreground-image:url(res:reload.png); }
+      div#toolbar > button#glass { foreground-image:url(res:glass.png); }
+      div#toolbar > button#help { foreground-image:url(res:help.png); }
+      div#toolbar > button#inspector { foreground-image:url(res:inspector.png); }
+      div#toolbar > button#inspector:checked { foreground-image-transformation:hue(sienna); }
+      
+      /*pulse animation, :busy starts it, click ends */
+      div#toolbar > button#inspector:busy  
+      {
+        assigned!: self.start-timer(800);
+           timer!: self:active = !self:active; 
+           click!: self:busy = false, self:active = false;
+      }
+      div#toolbar > button#inspector:busy:active
+      {
+        foreground-image-transformation:hue(brown);
+        transition:blend(quad-in-out,600ms);      
+      }
+      
+      div#intro { behavior:htmlarea; }
+      
+      @media on-glass 
+      {
+         html { background-color:transparent; }
+         frame#content { border-left:none; background-image:none; }
+      }
+      
+    </style>
+
+    <script type="text/tiscript">
+
+      const content = $(frame#content);
+      const inspectorButton = $(button#inspector);
+
+	    var filename = null;
+      const file_filter = "files *.htm,*.html,*.zip,*.scapp|*.HTM;*.HTML;*.ZIP;*.SCAPP|"
+				 "HTML files only(*.htm,*.html)|*.HTM;*.HTML|"
+				 "SCAPP files only (*.zip,*.scapp)|*.ZIP;*.SCAPP|"
+				 "All Files (*.*)|*.*";
+         
+      var debugIsActive = false; 
+
+      function loadFile(fn)
+      {
+	      filename = fn;
+	      content.load(fn);
+        $(button#reload).state.disabled = false;
+        var inspectorButton = $(button#inspector);
+        inspectorButton.state.disabled = false;
+        if(debugIsActive)
+          view.launchDebugView();
+      }
+
+      $(button#open).onClick = function()
+      {
+        var fn = view.selectFile(#open);
+		    if( fn ) 
+		    {
+          loadFile(fn);
+          // getting root node of the frame
+          var croot = content[0];
+          var title = croot.$(head>title); 
+          if( title )
+            view.title(title.text); // calling native method defined in sciter.h 
+        }
+      }
+      $(button#reload).onClick = function()
+      {
+		    if( filename ) {
+          content.load(filename);
+          if(debugIsActive)
+            view.launchDebugView();
+        }
+      }
+      $(button#glass).onClick = function()
+      {
+		    view.glass(this.value);
+      }
+      
+      $(button#help).onClick = function()
+      {
+		    view.open(System.home("../doc/main.htm"));
+      }
+
+      function content.onExchange(evt)
+      {
+         if( evt.type == Event.X_DRAG_ENTER && evt.draggingDataType == #file)
+         {
+           this.@#allow-drop = true;
+           return true;
+         }
+         else if( evt.type == Event.X_DRAG_LEAVE )
+         {
+           this.@#allow-drop = undefined;
+           return true;
+         }
+         else if( evt.type == Event.X_DRAG && evt.draggingDataType == #file)
+         {
+           return true;
+         }
+         else if( evt.type == Event.X_DROP && evt.draggingDataType == #file)
+         {
+           this.@#allow-drop = undefined;
+           var fn;
+           if(typeof evt.dragging == #array)
+             fn = evt.dragging[0];
+           else
+  		       fn = evt.dragging;
+           loadFile(fn);
+           return true;
+         }
+      }
+
+      $(button#inspector).onClick = function()
+      {
+        this.state.busy = false;
+        view.launchDebugView();
+      }
+      
+      function debugAttached()
+      {
+        debugIsActive = true;
+        inspectorButton.state.busy = false;
+        inspectorButton.state.checked = true;
+      }
+      function debugDetached()
+      {
+        debugIsActive = false;
+        inspectorButton.state.checked = false;
+        inspectorButton.state.busy = false;
+      }
+            
+    </script>
+
+  </head>
+  <body>
+    <div #toolbar>
+      <button #open title="load html" />
+      <button #reload title="reload html" disabled />
+      <button #glass type=checkbox title="glass mode" />
+      <button #help title="Help browser" />
+      <hr>
+      <button #inspector title="DOM inspector" disabled />
+    </div>
+    <frame #content src="res:sys-info.htm"></frame>
+  </body>
+</html>
