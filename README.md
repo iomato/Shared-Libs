@@ -9,7 +9,7 @@ git submodule init
 git submodule update
 ```
 
-This copies make it easy to you compile projects which depends on them, whithout the need to download each of them separately. And in order to let you not need to compile each library source, note that I also put here some of them already compiled, but I'm not sure if you will be able to use these .lib files due the likely differences of compilers, environment, etc.
+This copies make it easy to you compile projects which depends on them, without the need to download each of them separately. And in order to let you not need to compile each library source, note that I also put here some of them already compiled, but I'm not sure if you will be able to use these .lib files due the likely differences of compilers, environment, etc.
 
 
 
