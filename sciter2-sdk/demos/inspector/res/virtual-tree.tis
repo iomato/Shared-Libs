@@ -1,0 +1,106 @@
+
+var DomTree = function()
+{
+  var tree = $(#dom-tree); // widget
+  var ds = DomTreeDataSource; // tree data source
+
+  function appendOption(parentOpt, caption, uid, nodeState)
+  {
+    parentOpt.append("<option value='" + uid + "'><text>" + caption + "</text></option>");
+    var opt = parentOpt.last;
+    if( nodeState === true ) // expanded folder
+      opt.state.expanded = true;
+    else if( nodeState === false ) // collapsed folder
+      opt.state.collapsed = true;
+    // else 
+    //   neither state.expanded nor state.collapsed
+    return opt;
+  }
+
+  function expandOption(opt)
+  {
+    //stdout.println("expand");
+    var bodyNode;
+    function appendChild(caption, uid, isFolder,tag) { 
+      var t = appendOption(opt, caption, uid, isFolder? false: undefined); 
+      //stdout.println(uid,caption,isFolder);
+      if(isFolder && tag == "body")
+        bodyNode = t;
+    }
+    ds.eachChild(opt.attributes["value"].toInteger(), appendChild);
+    opt.state.expanded = true;
+    return bodyNode;
+  }
+  function collapseOption(opt)
+  {
+    //stdout.println("collapse");
+    opt.state.collapsed = true; 
+    while(opt.length > 1)
+      opt.last.remove();
+  }
+  
+  function notifyClick(trg)
+  {
+    ds.onNodeClick(tree.value);
+  }
+  
+  tree.onControlEvent = function(evt)
+  {
+    switch(evt.type)
+    {
+      case Event.ELEMENT_EXPANDED: expandOption(evt.target); return true;
+      case Event.ELEMENT_COLLAPSED: collapseOption(evt.target); return true; 
+      case Event.SELECT_SELECTION_CHANGED: notifyClick(evt.target); return true;
+    }
+  }
+ 
+  function appendRoot(caption, path, isFolder)
+  {
+    var rn = appendOption(tree, caption, path, isFolder? true: undefined);
+    if(isFolder) {
+      var bodyNode = expandOption(rn);
+      if(bodyNode)
+        expandOption(bodyNode);
+    }
+  }
+   
+  function onNodeModelChanged(uid)
+  {
+  }
+  
+  function showRoot(src = null) {
+    tree.clear();    
+    ds.eachRoot(appendRoot);
+  }
+
+  function showStack(stack, src = null) {
+    if(src == #dom-tree)
+      return;
+    var parent = tree;
+    var selectedUID = null;
+    for(var n = 0; n < stack.length; ++n)  
+    {
+      var uid = stack[n].uid;
+      var node = parent.$(option[value={uid}]);
+      if( !node ) break;
+      selectedUID = uid;
+      if( n != (stack.length - 1))
+      {
+        if( !node.state.expanded )
+          expandOption(node);
+      }
+    }
+    if(typeof selectedUID == #integer)
+    {
+      tree.value = selectedUID;
+    }
+  }
+  
+  return {
+    onNodeModelChanged: onNodeModelChanged,
+    showRoot: showRoot,
+    show: showStack
+  };
+  
+} ();
+

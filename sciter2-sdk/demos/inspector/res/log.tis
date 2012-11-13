@@ -1,0 +1,70 @@
+
+class Log: Behavior 
+{
+  const MAX_ITEMS = 500;
+
+  const SUBSYSTEM = ["dom","csss","css","tis"];
+  const SEVERITY = ["info","warning","error"];
+  const RE_FILE_LINE = /[(](file:[^()]+[(](\d+)[)])[)]/g;
+
+  var instance; // Log is singleton 
+
+  function attached()
+  {
+    instance = this;
+	  this._update();
+  }
+
+  function _update() // instance method
+  {
+    function crackText(text)
+    {
+      text = text.replace("\t","    ").htmlEscape();
+      var wrapFileLine = : str,g,n : "(<a href='" + (g /~ "(") + "' line=" + n + " >" + (g %~ "/") + "</a>)"; 
+      return text.replace(RE_FILE_LINE, wrapFileLine);
+    }
+    function formatLogMessage(sev,subs,text)
+    {
+      return String.printf("<option class='%s %s' msg='%s'>%s</option>", SUBSYSTEM[subs],SEVERITY[sev],crackText(text), text.htmlEscape());
+    }
+    var m;
+    while(m = view.nextLogMessage())
+	  {
+	    if(this.length >= MAX_ITEMS)
+	      this.first.remove();
+      this.append(formatLogMessage(m[1],m[0],m[2]));
+	  }
+    if(this.last)
+      this.last.post(::this.scrollToView(false,false));
+  }
+  
+  function update() // class method
+  {
+    if(instance) 
+      instance._update();
+  }
+  
+  @key 'C' @CTRL : { this.selection2clipboard(); return true; }
+
+  @click @on "menu>li[command='edit:copy']"  : { this.selection2clipboard(); return true; }
+  @click @on "menu>li[command='edit:clear']" : { this.clear(); return true; }
+  
+  @when Event.CONTEXT_MENU_SETUP :evt {
+    var menu = evt.source;
+    // copy item is enabled if there are :current or :checked options.
+    menu.$(li[command='edit:copy']).state.disabled = ! this.$(option:checked);
+	  // clear is enabled if there is at least one <option> in the list
+	  menu.$(li[command='edit:clear']).state.disabled = ! this.$(option);
+	  return true;
+  }
+  
+  function selection2clipboard()
+  {
+    var text = "";
+    for(var opt in this.$$(option:checked))
+      text += opt.attributes["msg"];
+    view.clipboard(#put,text);
+  }
+  
+
+}

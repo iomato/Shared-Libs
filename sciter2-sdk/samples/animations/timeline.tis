@@ -1,0 +1,145 @@
+
+class Timeline  {
+  
+  //| addLabel(label:String, time:Number):*
+  //|
+  //| Adds a label to the timeline, making it easy to mark important positions/times.
+  function addLabel(label,time) {}
+  
+  //| append(value:*, offset:Number = 0):*
+  //|
+  //| Appends a tween, timeline, callback, or label to the end of the timeline, optionally offsetting 
+  //| its insertion point by a certain amount (to make it overlap with the end of the timeline or 
+  //| leave a gap before its insertion point).  
+  function append(value, offset = 0) {}
+  	
+  //| appendMultiple(tweens:Array, offset:Number = 0, align:String = normal, stagger:Number = 0):*
+  //|
+  //| Appends multiple tweens/timelines/callbacks/labels to the end of the timeline at once, optionally 
+  //| offsetting the insertion point by a certain amount, aligning them (as a sequence for example), 
+  //| and/or staggering their relative timing.  
+  
+  function appendMultiple(tweens, offset = 0, align = #normal, stagger = 0) {}
+  
+	//| call(callback:Function, params:Array = null, offset:Number = 0, baseTimeOrLabel:* = null):*
+  //| Appends a callback to the end of the timeline - this is a convenience
+  //| method that accomplishes exactly the same thing as 
+  //| append( TweenLite.delayedCall(...) ) but with less code.
+  
+  function call(callback, params = null, offset = 0, baseTimeOrLabel: null)  {}
+  
+  //| clear(labels:Boolean = true):*
+  //| Empties the timeline of all tweens, timelines, and callbacks (and optionally labels too).  
+  
+  function clear(labels = true) {}
+  	
+  //| duration(value:Number):*
+  //| Gets the timeline's duration or, if used as a setter, adjusts the 
+  //| timeline's timeScale to fit it within the specified duration.
+  
+  function duration(value = null) {}
+  
+  //| from(target:Object, duration:Number, vars:Object, offset:Number = 0, baseTimeOrLabel:* = null):*
+  //| Appends a TweenLite.from() tween to the end of the timeline (or elsewhere) - 
+  //| this is a convenience method that accomplishes exactly the same thing 
+  //| as append( TweenLite.from(...) ) but with less code.
+  
+  function from(target, duration, vars, offset = 0, baseTimeOrLabel = null) {}
+  
+  //| fromTo(target:Object, duration:Number, fromVars:Object, toVars:Object, offset:Number = 0, baseTimeOrLabel:* = null):*
+  //| Appends a TweenLite.fromTo() tween to the end of the timeline - this is 
+  //| a convenience method that accomplishes exactly the same thing as 
+  //| append( TweenLite.fromTo(...) ) but with less code.  
+  
+  function fromTo(target, duration, fromVars, toVars, offset = 0, baseTimeOrLabel = undefined) {}
+  
+  //| children(nested:Boolean = true, tweens:Boolean = true, timelines:Boolean = true, ignoreBeforeTime:Number = -9999999999):Array
+  //| Returns an array containing all the tweens and/or timelines nested in this timeline.
+  
+  function children(nested = true, tweens = true, timelines = true, ignoreBeforeTime = undefined) {}
+  
+  //| labelTime(label:String):Number
+  //| Returns the time associated with a particular label.  
+  
+  function labelTime(labelName) {}
+  
+  //| tweensOf(target:Object, nested:Boolean = true):Array
+  //| Returns the tweens of a particular object that are inside this timeline.
+  
+  function tweensOf(target, nested = true) {}
+  
+  //| insert(value:*, timeOrLabel:* = 0):*
+  //| Inserts a tween, timeline, callback, or label into the timeline at a specific time, frame, or label.
+  
+  function insert(value, timeOrLabel = 0) {}
+  
+  //| insertMultiple(tweens:Array, timeOrLabel:* = 0, align:String = normal, stagger:Number = 0):*
+  //| Inserts multiple tweens/timelines/callbacks/labels into the timeline 
+  //| at once, optionally aligning them (as a sequence for example) and/or staggering the timing.
+  
+  function insertMultiple(tweens, timeOrLabel = 0, align = #normal, stagger = 0) {}
+  
+  //| invalidate():*
+  //| Clears any initialization data (like starting/ending values in tweens) 
+  //| which can be useful if, for example, you want to restart a tween without
+  //| reverting to any previously recorded starting values.
+
+  function invalidate() {}
+  
+  //| progress(value:Number):*
+  //| Gets or sets the animation's progress which is a value between 0 and 1
+  //| indicating the position of the virtual playhead where 0 is at the beginning, 
+  //| 0.5 is halfway complete, and 1 is complete.  
+
+  function progress(value = undefined) {}
+  
+  //| remove(value:*):*
+  //| Removes a tween, timeline, callback, or label from the timeline.
+
+  function remove(value) {}
+  
+  //| removeLabel(label:String):*
+  //| Removes a label from the timeline and returns the time of that label.  
+  
+  function removeLabel(label) {}
+  
+  //| seek(timeOrLabel:*, suppressEvents:Boolean = true):*
+  //| Jumps to a specific time (or label) without affecting whether or not the instance is paused or reversed.
+  
+  function seek(timeOrLabel, suppressEvents = true) {}
+  
+  //| set(target:Object, vars:Object, offset:Number = 0, baseTimeOrLabel:* = null):*
+  //| Appends a zero-duration tween to the end of the timeline that sets values 
+  //| immediately (when the virtual playhead reaches that position on the timeline) 
+  //| - this is a convenience method that accomplishes exactly the same thing as 
+  //| append( TweenLite.to(target, 0, {...}) ) but with less code.  
+  
+  function set(target, vars, offset = 0, baseTimeOrLabel = undefined) {}
+  
+  //| shiftChildren(amount:Number, adjustLabels:Boolean = false, ignoreBeforeTime:Number = 0):*
+  //| Shifts the startTime of the timeline's children by a deltaTime amount and optionally adjusts labels too.  
+  
+  function shiftChildren(deltaTime, adjustLabels = false, ignoreBeforeTime = 0) {}
+  
+  //| staggerFrom(targets:Array, duration:Number, vars:Object, stagger:Number = 0, offset:Number = 0, baseTimeOrLabel:* = null, onCompleteAll:Function = null, onCompleteAllParams:Array = null):*
+  //| Tweens an array of targets from a common set of destination values (using the current values as the destination), 
+  //| but staggers their start times by a specified amount of time, creating an evenly-spaced sequence.  
+  
+  function staggerFrom(targets, duration, vars, stagger = 0, offset = 0, baseTimeOrLabel = undefined, 
+                       onCompleteAll = null, onCompleteAllParams = null) {}
+  
+  //| staggerFromTo(targets:Array, duration:Number, fromVars:Object, toVars:Object, stagger:Number = 0, offset:Number = 0, baseTimeOrLabel:* = null, onCompleteAll:Function = null, onCompleteAllParams:Array = null):*
+  //| Tweens an array of targets from and to a common set of values, but staggers 
+  //| their start times by a specified amount of time, creating an evenly-spaced sequence.  
+  
+  function staggerFromTo(targets, duration, fromVars, toVars, stagger = 0, offset = 0, baseTimeOrLabel = undefined, 
+                       onCompleteAll = null, onCompleteAllParams = null) {}
+  
+  //| staggerTo(targets:Array, duration:Number, vars:Object, stagger:Number, offset:Number = 0, baseTimeOrLabel:* = null, onCompleteAll:Function = null, onCompleteAllParams:Array = null):*
+  //| Tweens an array of targets to a common set of destination values, but staggers 
+  //| their start times by a specified amount of time, creating an evenly-spaced sequence.  
+  
+  function staggerTo(targets, duration, vars, stagger = 0, offset = 0, baseTimeOrLabel = undefined, 
+                       onCompleteAll = null, onCompleteAllParams = null) {}
+  
+}

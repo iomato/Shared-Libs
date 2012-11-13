@@ -2,7 +2,7 @@
 
 Repository containing C++ third party libraries which are dependencies of others projects, specially [Omni](/midiway/Omni). Some will be the original copies, but there is also some customized ones, so plz dont redistribute them.
 
-When possible/available, I prefer to add them as a Git submodule. So after cloning you might need to
+When possible/available, I prefer to add them as a Git submodule. Refer [here](http://dropshado.ws/post/20058825150/git-submodules) for some commands you might need to use. Basically after cloning you need to
 
 ```ruby
 git submodule init
@@ -17,17 +17,17 @@ This copies make it easy to you compile projects which depends on them, whithout
 
 Libraries available:
 
-- TinyXML: from developer source - submodule
+- TinyXML: from developer source - as a submodule
 
-- Sciter 2 (preview version): from [here](http://www.terrainformatica.com/)
+- Sciter 2: from [here](http://www.terrainformatica.com/)
+
+- Scintilla: only the sources customized for Omni, download the rest (the correct version) from [here](http://www.scintilla.org/)
 
 Libraries I will eventually add (they are actually needed for Omni):
 
 - ATLServer
 
 - distorm3
-
-- Scintilla (Omni customized)
 
 - StormLib
 

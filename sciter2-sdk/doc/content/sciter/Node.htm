@@ -1,0 +1,89 @@
+﻿<html>
+  <head>
+    <meta name="generator" content="h-smile:richtext"/>
+  </head>
+<body>
+  <h1>Node object</h1>
+  <p>Represents non-element DOM nodes: text or comment. </p>
+  <table border="0" cellspacing="4" width="100%">
+    <tr>
+      <td colspan="2">
+        <h2>Properties</h2></td></tr>
+    <tr>
+      <td bgcolor="#ffffff" valign="top" align="right"><strong><em>parent</em></strong></td>
+      <td bgcolor="#fffff0" valign="top"><font color="#999999">r - </font><em>Element</em>, parent element of the node or <em>null</em> if this node is not connected to any element. Read-only.</td></tr>
+    <tr>
+      <td bgcolor="#ffffff" valign="top" align="right"><strong><em>nodeIndex</em></strong></td>
+      <td bgcolor="#fffff0" valign="top"><font color="#999999">r</font> - Integer, index of the node in parent nodes collection. </td></tr>
+    <tr>
+      <td bgcolor="#ffffff" valign="top" align="right"><strong><em>nextNode</em></strong></td>
+      <td bgcolor="#fffff0" valign="top"><font color="#999999">r - </font><em>Element or Node</em>, next sibling node of the node or <em>null</em> if this is the last element in parent collection.</td></tr>
+    <tr>
+      <td bgcolor="#ffffff" valign="top" align="right"><strong><em>priorNode</em></strong></td>
+      <td bgcolor="#fffff0" valign="top"><font color="#999999">r</font> - <em>Element or Node</em>, previous sibling node of the node or <em>null</em> if this is the first node in parent collection.</td></tr>
+    <tr>
+      <td bgcolor="#ffffff" valign="top" align="right"><strong><em>text</em></strong></td>
+      <td bgcolor="#fffff0" valign="top"><font color="#999999">rw</font> - <em>String</em>, text of the node. Read-write property.</td></tr>
+    <tr>
+      <td bgcolor="#ffffff" valign="top" align="right"><strong><em>isElement</em></strong></td>
+      <td bgcolor="#fffff0" valign="top"><font color="#999999">r</font> - <em>true </em>if this node is an element, false - otherwise.</td></tr>
+    <tr>
+      <td bgcolor="#ffffff" valign="top" align="right"><strong><em>isText</em></strong></td>
+      <td bgcolor="#fffff0" valign="top"><font color="#999999">r</font> - <em>true </em>if the node is a text node.</td></tr>
+    <tr>
+      <td bgcolor="#ffffff" valign="top" align="right"><strong><em>isComment</em></strong></td>
+      <td bgcolor="#fffff0" valign="top"><font color="#999999">r</font> - <em>true </em>if the node is a comment node.</td></tr>
+    <tr>
+      <td colspan="2" valign="top">
+        <h2>Methods</h2></td></tr>
+    <tr>
+      <td bgcolor="#ffffff" valign="top" align="right"><strong><em>createText</em></strong></td>
+      <td bgcolor="#fffff0">
+        <div><strong>(text: string)</strong> : <em>Node</em></div>
+        <p>Static constructor of text DOM nodes.</p></td></tr>
+    <tr>
+      <td bgcolor="#ffffff" valign="top" align="right"><strong><em>createComment</em></strong></td>
+      <td bgcolor="#fffff0">
+        <div><strong>(text: string)</strong> : <em>Node</em></div>
+        <p>Static constructor of comment DOM nodes.</p></td></tr>
+    <tr>
+      <td bgcolor="#ffffff" valign="top" align="right"><strong><em>createElement</em></strong></td>
+      <td bgcolor="#fffff0">
+        <div><strong>(tagname:symbol | string [, attributes: object] [, text:string])</strong> : <em>Elemen</em>t</div>
+        <p>Static constructor of Element [node]. Equivalent of <code>new Element(...)</code>.</p></td></tr>
+    <tr>
+      <td bgcolor="#ffffff" valign="top" align="right"><strong><em>toString</em></strong></td>
+      <td bgcolor="#fffff0">
+        <div><strong>()</strong> : <em>string</em></div>
+        <p>Returns string - text representation of the node.</p></td></tr>
+    <tr>
+      <td bgcolor="#ffffff" valign="top" align="right"><strong><em>clone</em></strong></td>
+      <td bgcolor="#fffff0">
+        <div><strong>() </strong>:<em>Node</em></div>
+        <p>Returns new copy of the node. New node is disconnected from the DOM. </p></td></tr>
+    <tr>
+      <td bgcolor="#ffffff" valign="top" align="right">
+        <div><strong><em>insertNodeBefore</em></strong></div>
+        <div></div></td>
+      <td bgcolor="#fffff0">
+        <div><strong>( node: Node)</strong> </div>
+        <p>Inserts the node in the DOM tree before this element.</p></td></tr>
+    <tr>
+      <td bgcolor="#ffffff" valign="top" align="right">
+        <div><strong><em>insertNodeAfter</em></strong></div>
+        <div></div></td>
+      <td bgcolor="#fffff0">
+        <div><strong>( node: Node)</strong></div>
+        <p>Inserts the node in the DOM tree after this element.</p></td></tr>
+    <tr>
+      <td bgcolor="#ffffff" valign="top" align="right"><strong><em>detach</em></strong></td>
+      <td bgcolor="#fffff0">
+        <div><strong>( ) </strong>: &nbsp;Node</div>
+        <p>Removes this node from its parent's nodes collection. After call of this method this.<em>parent</em> will become <em>null</em>.</p></td></tr>
+    <tr>
+      <td bgcolor="#ffffff" valign="top" align="right"><strong><em>remove</em></strong></td>
+      <td bgcolor="#fffff0">
+        <div><strong>( ) </strong>: &nbsp;Element</div>
+        <p>Removes this node from its parent's nodes collection. After call of this method this.<em>parent</em> will become <em>null</em>.</p></td></tr></table>
+</body>
+</html>

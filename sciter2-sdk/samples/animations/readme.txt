@@ -1,0 +1,1 @@
+This is port (functional equivalent) of GreenSock Animation Platform, see: http://www.greensock.com/v12/

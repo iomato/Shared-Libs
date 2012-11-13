@@ -1,0 +1,146 @@
+
+const ElementDetails = function () {
+
+  var detailsList = $(widget#details);
+  var usedStylesList = detailsList.$(#used-styles > dl);
+  var styleRulesList = detailsList.$(#styles > dl);
+  var statesList     = detailsList.$(#states > dl);
+  var attributesList = detailsList.$(#attributes > dl);
+  assert usedStylesList;
+  assert styleRulesList;
+  assert statesList;
+  assert attributesList;
+  
+  var shownUID = null;
+  
+  function renderStyleRules(rules)
+  {
+    styleRulesList.clear();
+    var cnt = 0;
+    if(rules)
+      for(var rule in rules)
+      {
+        if(rule.type == "style-rule")
+        {
+          var fn = (rule.file %~ "/") || rule.file;
+          styleRulesList.$append(<header><span.selector>{rule.selector}</span><a href='{rule.file}' line={rule.lineNo} >{fn}({rule.lineNo})</a></header>); 
+        }
+        else if(rule.type == "inline-style")
+          styleRulesList.$append(<header>@style:</header>); 
+        else if(rule.type == "runtime-style")
+          styleRulesList.$append(<header>runtime style:</header>); 
+          
+        var props = rule.properties;  
+        var props_names = [];  
+        for(var name in props) props_names.push(name);
+        props_names.sort();
+        for(var name in props_names)
+          styleRulesList.$append(<dt>{name}:</dt><dd>{props[name]}</dd>);
+        ++cnt;
+      }  
+    styleRulesList.parent.attributes.toggleClass("no-items", cnt == 0);
+  }
+  
+  function renderProps(props)
+  {
+    usedStylesList.clear();
+    var props_names = [];  
+    if(props)
+      for(var name in props) props_names.push(name);
+    props_names.sort();
+    for(var name in props_names)
+      usedStylesList.$append(<dt>{name}:</dt><dd>{props[name]}</dd>);
+    usedStylesList.parent.attributes.toggleClass("no-items", props_names.length == 0);
+  }
+  
+  const STATES = {
+      "link":Element.STATE_LINK,
+      "hover":Element.STATE_HOVER,
+      "active":Element.STATE_ACTIVE,
+      "visited":Element.STATE_VISITED,
+      "focus":Element.STATE_FOCUS,
+      "tab-focus":Element.STATE_TAB_FOCUS,
+      "current":Element.STATE_CURRENT,
+      "checked":Element.STATE_CHECKED,
+      "disabled":Element.STATE_DISABLED,
+      "read-only":Element.STATE_READONLY,
+      "expanded":Element.STATE_EXPANDED,
+      "collapsed":Element.STATE_COLLAPSED,
+      "incomplete":Element.STATE_INCOMPLETE,
+      "animating":Element.STATE_ANIMATING,
+      "focusable":Element.STATE_FOCUSABLE,
+      "anchor":Element.STATE_ANCHOR,
+      "popup":Element.STATE_POPUP,
+      "owns-popup":Element.STATE_OWNS_POPUP,
+      "empty":Element.STATE_EMPTY,
+      "busy":Element.STATE_BUSY,
+      "moving":Element.STATE_MOVING,
+      "copying":Element.STATE_COPYING,
+      "drop-target":Element.STATE_DROP_TARGET,
+      "drag-over":Element.STATE_DRAG_OVER,
+      "rtl":Element.STATE_IS_RTL,
+      "ltr":Element.STATE_IS_LTR
+    };  
+  
+  function renderStates(states)
+  {
+    statesList.clear();
+    var cnt = 0;
+    for(var (name,bit) in STATES)
+      if( (states & bit) != 0)
+      {
+        statesList.$append(<dt></dt><dd>:{name}</dd>);  
+        ++cnt;
+      }
+    statesList.parent.attributes.toggleClass("no-items", cnt == 0);
+  }
+  
+  function renderAttributes(atts)
+  {
+    attributesList.clear();
+    var cnt = 0;
+    if(atts)
+      for(var (name,val) in atts)
+      {
+        attributesList.$append(<dt>{name}:</dt><dd>{val}</dd>);  
+        ++cnt;
+      }
+    attributesList.parent.attributes.toggleClass("no-items", cnt == 0);
+  }
+
+  function showDetails(dt,uid)
+  { 
+    //stdout.printf("dt:\r%V\n",dt);
+    renderStyleRules(dt.appliedStyleRules);
+    renderProps(dt.usedStyleProperties);
+    renderStates(dt.states);
+    renderAttributes(dt.attributes);
+  }
+
+  function show(uid, src)
+  { 
+    var dt = view.getElementDetails(uid);
+    shownUID = uid;
+    showDetails(dt,uid);
+    function check() {
+      if( shownUID != uid ) return false;
+      var dtn = view.getElementDetails(uid);
+      if( !dtn.equals(dt) )
+        showDetails(dt = dtn,uid);
+      return true;
+    }
+    detailsList.timer(1000, check);
+  }
+  
+  function clear()
+  {
+    usedStylesList.clear(); usedStylesList.parent.state.expanded = false;
+    styleRulesList.clear(); styleRulesList.parent.state.expanded = false;
+    statesList.clear(); statesList.parent.state.expanded = false;
+    attributesList.clear(); attributesList.parent.state.expanded = false;
+    shownUID = null;
+  }
+  
+   
+  return { show:show, clear:clear };
+} ();

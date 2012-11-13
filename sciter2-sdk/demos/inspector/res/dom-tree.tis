@@ -1,0 +1,61 @@
+
+namespace DomTreeDataSource 
+{
+  // mandatory public interface methods:
+  
+  function elementCaption(n)
+  {
+    var folder = false;
+    var t = String.printf("<span.head>&lt;%s",n.tag);
+    var atts = n.atts;
+    if(atts)
+      for( var av in atts) {
+        t += String.printf(" <span.attrn>%s=</span>\"<span.attrv>%s</span>\"",av[0],av[1].htmlEscape()); 
+      }
+    if( n.text ) {
+      t += String.printf("&gt;</span><span.text>%s</span><span.tail>&lt;/%s&gt;</span>", n.text.htmlEscape(),n.tag); 
+    } else if( n.nodes ) {
+      t += String.printf("&gt;</span><span.text>...</span><span.tail>&lt;/%s&gt;</span>", n.tag); 
+      folder = true;
+    } else {
+      t += "/&gt;</span>";
+    }
+    return (folder,t);
+  }
+ 
+  // call cb(caption,path,isFolder) for each root item
+  function eachRoot(cb)
+  {
+    var n = view.navigateToRoot();
+    var (folder, text) = elementCaption(n);
+    cb(text,n.uid, folder);
+  }
+  
+  // call cb(caption,path,isFolder) for each child item of the path"
+  function eachChild(path,cb)
+  {
+    path = path.toInteger();
+    var children = view.getChildren(path);
+    for( var n in children )
+    {
+      if( typeof n == #string ) // text node
+      {
+        n = n.trim();
+        if(n) cb("\"" + n.htmlEscape() + "\"",path,false,null);
+      }
+      else 
+      {
+        var (folder, text) = elementCaption(n);
+        //stdout.println(text);
+        cb(text,n.uid, folder,n.tag);
+      }
+    }
+  }
+  
+  function onNodeClick(uid) {
+    //var uid = path.toInteger(); // element uid
+    highlightElement(uid, #dom-tree);
+  }
+  
+}
+

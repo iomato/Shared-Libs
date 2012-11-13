@@ -1,0 +1,26 @@
+﻿  stdafx.cpp
+c:\hsmile5\sdk\include\aux-cvt.h(493): warning C4267: 'argument' : conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\hsmile5\sdk\include\aux-cvt.h(528): warning C4267: 'argument' : conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\hsmile5\sdk\include\aux-cvt.h(566): warning C4267: 'return' : conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\hsmile5\sdk\include\aux-cvt.h(594): warning C4267: 'return' : conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\hsmile5\sdk\include\aux-cvt.h(618): warning C4267: 'argument' : conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\hsmile5\sdk\include\value.h(298): warning C4267: 'return' : conversion from 'size_t' to 'int', possible loss of data
+c:\hsmile5\sdk\include\value.h(299): warning C4267: 'return' : conversion from 'size_t' to 'int', possible loss of data
+c:\hsmile5\sdk\include\value.h(370): warning C4267: 'argument' : conversion from 'size_t' to 'UINT', possible loss of data
+C:\hsmile5\sdk\include\sciter-x.h(560): warning C4267: 'initializing' : conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\hsmile5\sdk\include\sciter-x-dom.hpp(99): warning C4267: 'argument' : conversion from 'size_t' to 'UINT', possible loss of data
+C:\hsmile5\sdk\include\sciter-x-dom.hpp(659): warning C4267: 'argument' : conversion from 'size_t' to 'UINT', possible loss of data
+C:\hsmile5\sdk\include\sciter-x-dom.hpp(1349): warning C4267: '=' : conversion from 'size_t' to 'UINT', possible loss of data
+C:\hsmile5\sdk\include\sciter-x-dom.hpp(1367): warning C4267: '=' : conversion from 'size_t' to 'UINT', possible loss of data
+C:\hsmile5\sdk\include\sciter-x-dom.hpp(1376): warning C4267: '=' : conversion from 'size_t' to 'UINT', possible loss of data
+  behavior_tabs.cpp
+  inspector-host-behavior.cpp
+  inspector-log.cpp
+  inspector-window.cpp
+inspector-window.cpp(181): warning C4244: 'argument' : conversion from 'LPARAM' to 'unsigned int', possible loss of data
+inspector-window.cpp(184): warning C4244: 'argument' : conversion from 'LPARAM' to 'unsigned int', possible loss of data
+  inspector.cpp
+     Creating library C:\hsmile5\sdk\bin\inspector64.lib and object C:\hsmile5\sdk\bin\inspector64.exp
+  Generating code
+  Finished generating code
+  inspector.vcxproj -> C:\hsmile5\sdk\bin\inspector64.dll

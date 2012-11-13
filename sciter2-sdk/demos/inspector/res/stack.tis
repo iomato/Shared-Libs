@@ -1,0 +1,37 @@
+
+const ElementStack = function () {
+
+  var wstack = $(#stack);
+  
+  function show(highlightedStack, src)
+  { 
+    //if(src == #stack)
+    //  return;
+    wstack.clear();
+    function emit(sym,val) { return val? sym + val:"" }
+    function emitclass(val) { 
+      var r = "";
+      if(val) for(var c1 in val.split(" ")) r += emit(".",c1);
+      return r;
+    }
+    for(var td in highlightedStack)
+      wstack.$append(<li uid={td.uid}>{td.tag}{emit("!",td.type)}{emit("#",td.id)}{emitclass(td.cls)}</li>);
+  }
+  
+  function clear()
+  {
+  }
+  
+  wstack.onControlEvent = function(evt)
+  {
+    if(evt.type == Event.BUTTON_CLICK)
+    {
+      var uid = evt.target.attributes["uid"].toInteger();
+      highlightElement(uid,#stack);
+      return true;
+    }
+  }
+   
+  return { show:show, clear:clear };  
+
+} ();

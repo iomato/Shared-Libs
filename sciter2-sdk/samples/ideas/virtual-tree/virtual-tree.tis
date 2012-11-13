@@ -1,0 +1,48 @@
+
+function VirtualTree(tree /*widget*/, ds /*tree data source*/)
+{
+  function appendOption(parentOpt, caption, path, nodeState)
+  {
+    var opt = parentOpt.$append(<option filename="{path}"><text>{caption}</text></option>);
+    if( nodeState === true ) // expanded folder
+      opt.state.expanded = true;
+    else if( nodeState === false ) // collapsed folder
+      opt.state.collapsed = true;
+    // else 
+    //   neither state.expanded nor state.collapsed
+    return opt;
+  }
+
+  function expandOption(opt)
+  {
+    //stdout.println("expand");
+    function appendChild(caption, path, isFolder) { appendOption(opt, caption, path, isFolder? false: undefined); }
+    ds.eachChild(opt.attributes["filename"], appendChild);
+    opt.state.expanded = true;
+  }
+  function collapseOption(opt)
+  {
+    //stdout.println("collapse");
+    opt.state.collapsed = true; 
+    while(opt.length > 1)
+      opt.last.remove();
+  }
+  
+  tree.onControlEvent = function(evt)
+  {
+    if( evt.type == Event.ELEMENT_EXPANDED )  { expandOption(evt.target); return true; }
+    else if( evt.type == Event.ELEMENT_COLLAPSED ) { collapseOption(evt.target); return true; }
+  }
+  
+  function appendRoot(caption, path, isFolder)
+  {
+    var rn = appendOption(tree, caption, path, isFolder? true: undefined);
+    if(isFolder)
+      expandOption(rn);
+  }
+   
+  
+  tree.clear();    
+  ds.eachRoot(appendRoot);
+}
+

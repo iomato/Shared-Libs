@@ -1,0 +1,18 @@
+# ignore every first-level directory (so not ignoring root files)
+/*/
+
+# specifi rules for shipping librarys
+!/sciter2-sdk
+
+!/scintillaGALAXY
+/scintillaGALAXY/*
+!/scintillaGALAXY/version.txt
+!/scintillaGALAXY/lexers/
+!/scintillaGALAXY/lexers/LexGALAXY.cxx
+!/scintillaGALAXY/include/
+/scintillaGALAXY/include/*
+!/scintillaGALAXY/include/Scintilla.iface
+!/scintillaGALAXY/src/
+/scintillaGALAXY/src/*
+!/scintillaGALAXY/src/Editor.cxx
+!/scintillaGALAXY/src/LineMarker.cxx

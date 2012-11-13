@@ -1,0 +1,74 @@
+class SnippetList: Behavior
+{
+  function attached()
+  {
+    Settings.add(this);
+  }
+  function onMouse(evt)
+  {
+     if(evt.type == (Event.MOUSE_DOWN | Event.SINKING) && 
+       evt.target.$is(li>pre))
+     {
+       var li = evt.target.$p(li);
+       li.state.current = true; 
+       this.update();
+     }
+  }
+  
+  function onControlEvent(evt)
+  {
+    var li = null;
+    if(evt.type == Event.BUTTON_CLICK)
+    {
+      li = evt.target.$p(li);
+      if( evt.target.$is(button.run) )
+      {
+        var code = "(function(){" + li.$(pre).value + "\r\n}).call(this)";
+        view.runHostScript(code);
+        //ElementDetails.show(uid,byModule);
+      }
+      else if( evt.target.$is(button.del) )
+      {
+        li.remove();
+        saveState();
+      }
+      return true;
+    }
+    else if(evt.type == Event.EDIT_VALUE_CHANGED)
+    {
+      saveState();
+      var last = this.last.$(pre).value.trim();
+      if(last.length && this.length < 100) // if last not empty and not more than 100 items - add new empty item.
+        this.appendItem("");
+      return true;
+    }
+  }
+
+  function appendItem(txt)
+  {
+    this.$append(<li><button .run .light>4</button><pre>{txt}</pre><button .del .light>r</button></li>);
+  }
+  
+  function store(data) 
+  {
+    var items = [];
+    for(var pre in this.$$(li>pre))
+    {
+      var txt = pre.value.trim();
+      if( txt ) items.push(txt);
+    }
+    data.snippets = items;
+  }
+
+  function restore(data) 
+  {
+    var items = data.snippets;
+    if( !items || items.length == 0) 
+      return;
+    this.clear();
+    for( var txt in items)
+      this.appendItem(txt);
+    this.appendItem("");
+  }
+  
+}
