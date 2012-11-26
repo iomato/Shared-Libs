@@ -1,7 +1,11 @@
 # ignore every first-level directory (so not ignoring root files)
 /*/
 
-# specifi rules for shipping librarys
+# include compiled .libs
+!/bin-Debug
+!/bin-Release
+
+# specific rules for shipping librarys
 !/sciter2-sdk
 
 !/scintillaGALAXY

@@ -23,18 +23,14 @@ Libraries available:
 
 - Scintilla: only the sources customized for Omni, download the rest (ensure the correct version) from [here](http://www.scintilla.org/)
 
-Libraries I will eventually add (they are actually needed for Omni):
+Libraries that are actually needed for Omni, but are missing (just download them)
 
-- ATLServer
+- StormLib: from [here](http://www.zezula.net/en/mpq/download.html)
 
-- distorm3
-
-- StormLib
-
-- CrashRpt
+- CrashRpt (the SDK comes already compiled): from [here](http://code.google.com/p/crashrpt/)
 
 Libraries you have to compile before usage by dependent projects:
 
-- Scintilla (.dll)
+- StormLib
 
-- StormLib (.lib and .dll)
+- Scintilla
